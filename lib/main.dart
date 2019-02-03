@@ -9,6 +9,9 @@ class MyApp extends StatelessWidget {
    return MaterialApp(
      title: '🍕 Tracker',
      home: MyHomePage(),
+     theme: new ThemeData(
+       primarySwatch: Colors.orange,
+     ),
    );
  }
 }
@@ -26,6 +29,10 @@ class _MyHomePageState extends State<MyHomePage> {
    return Scaffold(
      appBar: AppBar(title: Text('🍕 Tracker')),
      body: _buildBody(context),
+     floatingActionButton: FloatingActionButton(
+         child: Icon(Icons.add),
+         onPressed: null
+     ),
    );
  }
 
