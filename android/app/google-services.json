@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "945703557503",
+    "firebase_url": "https://pizza-tracker-66000.firebaseio.com",
+    "project_id": "pizza-tracker-66000",
+    "storage_bucket": "pizza-tracker-66000.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945703557503:android:e6b17339ac901cd9",
+        "android_client_info": {
+          "package_name": "spegel.tony.pizzatracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "945703557503-gpve01110i6iodlnbj6ur4fus4aci2mb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8UsJKmi0ijqEWzAjLOhpB55gu6bElWEU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
