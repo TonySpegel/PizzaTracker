@@ -1,9 +1,15 @@
+// FireStore
 import 'package:cloud_firestore/cloud_firestore.dart';
+// Material Theme
 import 'package:flutter/material.dart';
+// Internationalization
+import 'package:intl/intl.dart';
+// Widgets
+import 'pizza_item_screen.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(PizzaTracker());
 
-class MyApp extends StatelessWidget {
+class PizzaTracker extends StatelessWidget {
  @override
  Widget build(BuildContext context) {
    return MaterialApp(
@@ -70,7 +76,9 @@ class _MyHomePageState extends State<MyHomePage> {
          borderRadius: BorderRadius.circular(5.0),
        ),
        child: ListTile(
-         title: Text(record.name),
+         title: Text(
+             new DateFormat('yyyy-MM-dd').format(record.date).toString()
+         ),
          trailing: Text(record.quantity.toString()),
          onTap: () => print(record),
        ),
@@ -83,40 +91,87 @@ class Record {
  final String name;
  final double quantity;
  final DocumentReference reference;
+ final DateTime date;
 
  Record.fromMap(Map<String, dynamic> map, { this.reference })
      : assert(map['name'] != null),
        assert(map['quantity'] != null),
+       assert(map['date'] != null),
         name = map['name'],
-        quantity = map['quantity'].toDouble();
+        quantity = map['quantity'].toDouble(),
+        date = map['date'];
 
  Record.fromSnapshot(DocumentSnapshot snapshot)
      : this.fromMap(snapshot.data, reference: snapshot.reference);
 
  @override
- String toString() => "Record<$name:$quantity>";
+ String toString() => "Record<$name:$quantity:$date>";
 }
 
+///
+/// Modal Bottom Sheet
+///
 void _settingModalBottomSheet(context){
   showModalBottomSheet(
     context: context,
     builder: (BuildContext bc){
       return Container(
-        child: new Wrap(
-          children: <Widget>[
-            new ListTile(
-              leading: new Icon(Icons.music_note),
-              title: new Text('Music'),
-              onTap: () => {}
-            ),
-            new ListTile(
-              leading: new Icon(Icons.videocam),
-              title: new Text('Video'),
-              onTap: () => {},
-            ),
-          ],
-        ),
+        child: MyCustomForm(),
       );
     }
   );
+}
+
+
+class MyCustomForm extends StatefulWidget {
+  @override
+  MyCustomFormState createState() {
+    return MyCustomFormState();
+  }
+}
+
+///
+/// Pizza Form
+///
+class MyCustomFormState extends State<MyCustomForm> {
+  // Create a global key that will uniquely identify the Form widget and allow
+  // us to validate the form
+  //
+  // Note: This is a GlobalKey<FormState>, not a GlobalKey<MyCustomFormState>!
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    // Build a Form widget using the _formKey we created above
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter some text';
+              }
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: RaisedButton(
+              onPressed: () {
+                // Validate will return true if the form is valid, or false if
+                // the form is invalid.
+                if (_formKey.currentState.validate()) {
+                  // If the form is valid, we want to show a Snackbar
+                  Scaffold.of(context)
+                      .showSnackBar(SnackBar(content: Text('Processing Data')));
+                }
+              },
+              child: Text('Submit'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
