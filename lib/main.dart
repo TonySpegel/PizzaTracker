@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
      title: '🍕 Tracker',
      home: MyHomePage(),
      theme: new ThemeData(
-       primarySwatch: Colors.orange,
+       primarySwatch: Colors.amber,
      ),
    );
  }
@@ -30,8 +30,10 @@ class _MyHomePageState extends State<MyHomePage> {
      appBar: AppBar(title: Text('🍕 Tracker')),
      body: _buildBody(context),
      floatingActionButton: FloatingActionButton(
-         child: Icon(Icons.add),
-         onPressed: null
+         child: Icon(Icons.local_pizza),
+         onPressed: (){
+          _settingModalBottomSheet(context);
+        },
      ),
    );
  }
@@ -93,4 +95,28 @@ class Record {
 
  @override
  String toString() => "Record<$name:$quantity>";
+}
+
+void _settingModalBottomSheet(context){
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext bc){
+      return Container(
+        child: new Wrap(
+          children: <Widget>[
+            new ListTile(
+              leading: new Icon(Icons.music_note),
+              title: new Text('Music'),
+              onTap: () => {}
+            ),
+            new ListTile(
+              leading: new Icon(Icons.videocam),
+              title: new Text('Video'),
+              onTap: () => {},
+            ),
+          ],
+        ),
+      );
+    }
+  );
 }
