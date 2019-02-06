@@ -13,11 +13,7 @@ class PizzaTracker extends StatelessWidget {
  @override
  Widget build(BuildContext context) {
    return MaterialApp(
-     title: '🍕 Tracker',
-     home: MyHomePage(),
-     theme: new ThemeData(
-       primarySwatch: Colors.amber,
-     ),
+     home: new PizzaItemScreen(),
    );
  }
 }
@@ -77,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
        ),
        child: ListTile(
          title: Text(
-             new DateFormat('yyyy-MM-dd').format(record.date).toString()
+            new DateFormat('yyyy-MM-dd').format(record.date).toString()
          ),
          trailing: Text(record.quantity.toString()),
          onTap: () => print(record),
