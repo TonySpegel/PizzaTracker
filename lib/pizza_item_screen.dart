@@ -11,6 +11,24 @@ class PizzaItemScreen extends StatelessWidget {
         backgroundColor: Colors.amber,
       ),
       body: new PizzaItem(),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.amber,
+        child: Icon(Icons.local_pizza),
+        onPressed: () {
+          _settingModalBottomSheet(context);
+        },
+      ),
     );
   }
+}
+
+///
+/// Modal Bottom Sheet
+///
+void _settingModalBottomSheet(context) {
+  showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return Container();
+      });
 }
