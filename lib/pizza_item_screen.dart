@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'pizza_item.dart';
 import 'package:flutter/foundation.dart';
 
-
 // FireStore
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PizzaItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('🍕 Tracker'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('🍕 Tracker'),
         backgroundColor: Colors.amber,
       ),
       body: _buildBody(context),
@@ -38,7 +37,6 @@ Widget _buildBody(BuildContext context) {
 }
 
 Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
-
   return ListView(
     padding: const EdgeInsets.only(top: 20.0),
     children: snapshot.map((data) => _buildListItem(context, data)).toList(),
@@ -47,15 +45,13 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
 
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   final pizza = Pizza.fromSnapshot(data);
-}
 
-///
-/// Modal Bottom Sheet
-///
-void _settingModalBottomSheet(context) {
-  showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc) {
-        return Container();
-      });
+  return Padding(
+    key: ValueKey(pizza.name),
+    padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+
+    child: Container(
+      child: PizzaItem(),
+    ),
+  );
 }

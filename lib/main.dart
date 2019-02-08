@@ -13,8 +13,8 @@ class PizzaTracker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //home: new PizzaItemScreen(),
-      home: new MyHomePage(),
+      home: new PizzaItemScreen(),
+      // home: new MyHomePage(),
     );
   }
 }
@@ -61,10 +61,6 @@ class _MyHomePageState extends State<MyHomePage> {
       key: ValueKey(record.name),
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
       child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(5.0),
-        ),
         child: ListTile(
           title:
               Text(new DateFormat('yyyy-MM-dd').format(record.date).toString()),
