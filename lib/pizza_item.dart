@@ -26,7 +26,26 @@ class Pizza {
   String toString() => "Pizza<$name:$quantity:$date>";
 }
 
-class PizzaItem extends StatelessWidget {
+class PizzaItem extends StatefulWidget {
+  final String name;
+
+  PizzaItem({Key key, this.name}) : super(key: key);
+
+  @override
+  _PizzaItemState createState() => _PizzaItemState();
+}
+
+class _PizzaItemState extends State<PizzaItem> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   //
   // Define Layout Elements
   //
@@ -39,29 +58,20 @@ class PizzaItem extends StatelessWidget {
     ),
   );
 
-  final middleSection = Expanded(
-    child: Container(
-      padding: EdgeInsets.only(left: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          Text(
-            "Name",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-              fontSize: 16.0,
-            ),
-          ),
-          Text(
-            "Hi whatsp?",
-            style: TextStyle(color: Colors.grey),
-          ),
-        ],
+  Widget getMiddleSection(String name) {
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.only(left: 8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text(name),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 
   final rightSection = Container(
     child: Column(
@@ -86,16 +96,14 @@ class PizzaItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 2,
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children:
-            <Widget>[leftSection, middleSection, rightSection],
-        )
-      )
-    );
+        elevation: 2,
+        child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                getMiddleSection(widget.name.toString()),
+              ],
+            )));
   }
 }

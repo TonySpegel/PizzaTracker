@@ -18,7 +18,20 @@ class PizzaItemScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.amber,
         child: Icon(Icons.local_pizza),
-        onPressed: () { },
+        onPressed: () {},
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      bottomNavigationBar: BottomAppBar(
+        clipBehavior: Clip.antiAlias,
+        color: Colors.white,
+        shape: CircularNotchedRectangle(),
+        child: Material(
+          child: SizedBox(
+            width: double.infinity,
+            height: 80.0,
+          ),
+          color: Colors.white,
+        ),
       ),
     );
   }
@@ -26,14 +39,17 @@ class PizzaItemScreen extends StatelessWidget {
 
 Widget _buildBody(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('pizza-list').snapshots(),
-      builder: (context, snapshot) {
-        // Show Linear Progress as long as there is no data
-        if (!snapshot.hasData) return LinearProgressIndicator();
+    stream: Firestore.instance
+        .collection('pizza-list')
+        .orderBy('date', descending: true)
+        .snapshots(),
+    builder: (context, snapshot) {
+      // Show Linear Progress as long as there is no data
+      if (!snapshot.hasData) return LinearProgressIndicator();
 
-        return _buildList(context, snapshot.data.documents);
-      },
-    );
+      return _buildList(context, snapshot.data.documents);
+    },
+  );
 }
 
 Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
@@ -49,7 +65,6 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   return Padding(
     key: ValueKey(pizza.name),
     padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-
     child: Container(
       child: PizzaItem(),
     ),
