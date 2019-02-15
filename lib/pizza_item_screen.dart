@@ -1,6 +1,7 @@
 /// s/o https://github.com/PoojaB26/LayoutsFlutter/blob/master/lib/chat_item.dart
 import 'package:flutter/material.dart';
 import 'pizza_item.dart';
+import 'pizza_form.dart';
 import 'package:flutter/foundation.dart';
 
 // FireStore
@@ -17,10 +18,12 @@ class PizzaItemScreen extends StatelessWidget {
       body: _buildBody(context),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.amber,
-        child: Icon(Icons.local_pizza),
-        onPressed: () {},
+        child: const Icon(Icons.local_pizza),
+        onPressed: () {
+          _settingModalBottomSheet(context);
+        },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         clipBehavior: Clip.antiAlias,
         color: Colors.white,
@@ -28,7 +31,7 @@ class PizzaItemScreen extends StatelessWidget {
         child: Material(
           child: SizedBox(
             width: double.infinity,
-            height: 80.0,
+            height: 40.0,
           ),
           color: Colors.white,
         ),
@@ -66,7 +69,20 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     key: ValueKey(pizza.name),
     padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
     child: Container(
-      child: PizzaItem(),
+      child: PizzaItem(pizza: pizza),
     ),
   );
+}
+
+void _settingModalBottomSheet(context) {
+  showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {},
+          child: MyCustomForm(),
+        );
+
+      });
 }

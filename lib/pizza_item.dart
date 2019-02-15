@@ -10,41 +10,29 @@ class Pizza {
   final DocumentReference reference;
   final String name;
   final double quantity;
+  final List topings;
 
   Pizza.fromMap(Map<String, dynamic> map, {this.reference})
       : assert(map['name'] != null),
         assert(map['quantity'] != null),
         assert(map['date'] != null),
+        assert(map['topings'] != null),
         name = map['name'],
         quantity = map['quantity'].toDouble(),
-        date = map['date'];
+        date = map['date'],
+        topings = map['topings'];
 
   Pizza.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, reference: snapshot.reference);
 
   @override
-  String toString() => "Pizza<$name:$quantity:$date>";
+  String toString() => "Pizza<$name:$quantity:$date:$topings>";
 }
 
-class PizzaItem extends StatefulWidget {
-  final String name;
+class PizzaItem extends StatelessWidget {
+  final Pizza pizza;
 
-  PizzaItem({Key key, this.name}) : super(key: key);
-
-  @override
-  _PizzaItemState createState() => _PizzaItemState();
-}
-
-class _PizzaItemState extends State<PizzaItem> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  PizzaItem({this.pizza});
 
   //
   // Define Layout Elements
@@ -57,21 +45,6 @@ class _PizzaItemState extends State<PizzaItem> {
       radius: 24.0,
     ),
   );
-
-  Widget getMiddleSection(String name) {
-    return Expanded(
-      child: Container(
-        padding: EdgeInsets.only(left: 8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(name),
-          ],
-        ),
-      ),
-    );
-  }
 
   final rightSection = Container(
     child: Column(
@@ -95,15 +68,37 @@ class _PizzaItemState extends State<PizzaItem> {
 
   @override
   Widget build(BuildContext context) {
+    final middleSection = Expanded(
+      child: Container(
+        padding: EdgeInsets.only(left: 8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text(
+              pizza.name,
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                fontSize: 16.0,
+              ),
+            ),
+            Text(
+              pizza.topings.join(', '),
+              style: TextStyle(color: Colors.grey),
+            ),
+          ],
+        ),
+      ),
+    );
+
     return Card(
         elevation: 2,
         child: Padding(
             padding: EdgeInsets.all(16.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                getMiddleSection(widget.name.toString()),
-              ],
+              children: <Widget>[leftSection, middleSection, rightSection],
             )));
   }
 }
