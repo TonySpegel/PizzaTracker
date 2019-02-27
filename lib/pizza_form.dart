@@ -1,6 +1,11 @@
 // Material Theme
 import 'package:flutter/material.dart';
 
+// FireStore
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'pizza_item.dart';
+
 // Create a Form Widget
 class MyCustomForm extends StatefulWidget {
   @override
@@ -17,11 +22,45 @@ class MyCustomFormState extends State<MyCustomForm> {
   //
   // Note: This is a GlobalKey<FormState>, not a GlobalKey<MyCustomFormState>!
   final _formKey = GlobalKey<FormState>();
+  Firestore db = new Firestore();
+
+  Future<Pizza> addPizza(
+    DateTime date
+    String name,
+    String place,
+    String producer,
+    double quantity,
+    List topings,
+    String type
+  ) async {
+    final TransactionHandler createTransaction = (Transaction tx) async {
+      final DocumentSnapshot ds = await tx.get(db.collection('pizza-list').document());
+
+      var dataMap = new Map<String, dynamic>();
+      dataMap['date'] = date;
+      dataMap['name'] = name;
+      dataMap['place'] = place;
+      dataMap['producer'] = producer;
+      dataMap['quantity'] = quantity;
+      dataMap['topings'] = topings;
+      dataMap['type'] = type;
+
+      await tx.set(ds.reference, dataMap);
+
+      return dataMap;
+    };
+
+  return Firestore.instance.runTransaction(createTransaction)
+    .then((mapData) {
+      return Pizza.fromMap(mapData);
+    }).catchError((error) {
+      print('error: $error');
+      return null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey we created above
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
       child: Form(
@@ -35,17 +74,29 @@ class MyCustomFormState extends State<MyCustomForm> {
             ),
             TextFormField(
               decoration: InputDecoration(
-                labelText: '🍕 Name',
-                border: OutlineInputBorder(),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.red, width: 1.0),
-                ),
-              ),
+                  labelText: 'Name',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Padding(
+                    padding: const EdgeInsetsDirectional.only(start: 12.0),
+                    child: new Icon(
+                        Icons.local_pizza), // myIcon is a 48px-wide widget.
+                  )
+                  // focusedBorder: const OutlineInputBorder(
+                  //   borderSide: const BorderSide(color: Colors.red, width: 1.0),
+                  // ),
+                  ),
               validator: (value) {
                 if (value.isEmpty) {
                   return 'bruh enter some text';
                 }
               },
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Quantity',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.number,
             ),
             Center(
               child: RaisedButton(
@@ -58,6 +109,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                     Scaffold.of(context).showSnackBar(
                         SnackBar(content: Text('Processing Data')));
                   }
+
+                  addPizza(
+                    DateTime.now(),
+                    'Ristorante Salami',
+                    'Zu Hause',
+                    'Ristorante',
+                    1,
+                    ['Salami'],
+                    'TKP'
+                  );
                 },
                 child: new Row(
                   mainAxisAlignment: MainAxisAlignment.center,
