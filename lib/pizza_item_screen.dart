@@ -55,13 +55,6 @@ Widget _buildBody(BuildContext context) {
   );
 }
 
-Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
-  return ListView(
-    padding: const EdgeInsets.only(top: 20.0),
-    children: snapshot.map((data) => _buildListItem(context, data)).toList(),
-  );
-}
-
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   final pizza = Pizza.fromSnapshot(data);
 
@@ -74,13 +67,43 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   );
 }
 
+Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+  Padding infoCard = Padding(
+    padding: EdgeInsets.all(8),
+    child: Card(
+      child: Container(
+        padding: EdgeInsets.all(16.0),
+        child: Row(
+          children: <Widget>[
+            Text('Hi there'),
+          ],
+        ),
+      ),
+    )
+  );
+
+  ListView elements = ListView(
+    padding: const EdgeInsets.only(top: 20.0),
+    children: snapshot.map((data) => _buildListItem(context, data)).toList(),
+  );
+
+  Container wrapper = Container(
+    child: Row(
+      children: <Widget>[
+        infoCard,
+      ]
+    )
+  );
+
+  return elements;
+}
+
 void _settingModalBottomSheet(context) {
-  showModalBottomSheet(
+  showBottomSheet(
       context: context,
       builder: (BuildContext bc) {
         return GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {},
+
           child: MyCustomForm(),
         );
 

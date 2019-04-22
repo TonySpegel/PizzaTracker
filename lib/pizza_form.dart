@@ -1,5 +1,6 @@
 // Material Theme
 import 'package:flutter/material.dart';
+import 'pizza_form_type.dart';
 
 // Create a Form Widget
 class MyCustomForm extends StatefulWidget {
@@ -29,9 +30,12 @@ class MyCustomFormState extends State<MyCustomForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              'Enter Data for your new 🍕',
-              style: Theme.of(context).textTheme.headline,
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
+              child: Text(
+                'New 🍕 Entry',
+                style: Theme.of(context).textTheme.headline,
+              )
             ),
             TextFormField(
               decoration: InputDecoration(
@@ -47,6 +51,25 @@ class MyCustomFormState extends State<MyCustomForm> {
                 }
               },
             ),
+
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+              child: Text(
+                'Type',
+                style: Theme.of(context).textTheme.title,
+              )
+            ),
+
+            PizzaType(),
+
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+              child: Text(
+                'Place',
+                style: Theme.of(context).textTheme.title,
+              )
+            ),
+
             Center(
               child: RaisedButton(
                 color: Colors.amber,
@@ -59,12 +82,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                         SnackBar(content: Text('Processing Data')));
                   }
                 },
-                child: new Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    new Text('Add new'),
-                    new Icon(Icons.local_pizza),
+                    Text('Add new'),
+                    Icon(Icons.local_pizza),
                   ],
                 ),
               ),

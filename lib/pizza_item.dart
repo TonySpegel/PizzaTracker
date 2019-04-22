@@ -51,14 +51,14 @@ class PizzaItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         Text(
-          "9:50",
+          '9:50',
           style: TextStyle(color: Colors.lightGreen, fontSize: 12.0),
         ),
         CircleAvatar(
           backgroundColor: Colors.black38,
           radius: 10.0,
           child: Text(
-            "1",
+            '1',
             style: TextStyle(color: Colors.white, fontSize: 12.0),
           ),
         )
@@ -68,6 +68,8 @@ class PizzaItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print({this.pizza});
+
     final middleSection = Expanded(
       child: Container(
         padding: EdgeInsets.only(left: 8.0),
@@ -93,12 +95,14 @@ class PizzaItem extends StatelessWidget {
     );
 
     return Card(
-        elevation: 2,
-        child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[leftSection, middleSection, rightSection],
-            )));
+      elevation: 2,
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[leftSection, middleSection, rightSection],
+        )
+      )
+    );
   }
 }
