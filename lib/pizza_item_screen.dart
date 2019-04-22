@@ -87,15 +87,18 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
     children: snapshot.map((data) => _buildListItem(context, data)).toList(),
   );
 
-  Container wrapper = Container(
-    child: Row(
-      children: <Widget>[
-        infoCard,
-      ]
-    )
+  Column wrapper = Column(
+    children: <Widget>[
+      infoCard,
+      Expanded(
+        child: Container(
+          child: elements,
+        ),
+      )
+    ],
   );
 
-  return elements;
+  return wrapper;
 }
 
 void _settingModalBottomSheet(context) {
