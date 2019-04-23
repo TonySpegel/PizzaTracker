@@ -55,6 +55,56 @@ Widget _buildBody(BuildContext context) {
   );
 }
 
+DateTime todayUtc(){
+  DateTime now = new DateTime.now();
+  return startOfDay(new DateTime.utc(now.year, now.month, now.day));
+}
+
+DateTime startOfDay(DateTime date){
+  if (date == null) return null;
+  if (date.isUtc) {
+    return new DateTime.utc(date.year, date.month, date.day, 0, 0, 0);
+  } else {
+    return new DateTime(date.year, date.month, date.day, 0, 0, 0);
+  }
+}
+
+DateTime endOfDay(DateTime date){
+  if (date == null) return null;
+  if (date.isUtc) {
+    return new DateTime.utc(date.year, date.month, date.day, 23, 59, 59);
+  } else {
+    return new DateTime(date.year, date.month, date.day, 23, 59, 59);
+  }
+}
+
+void getEntries(mode) async {
+  DateTime today = todayUtc();
+
+  switch(mode) {
+    case 'week': {
+      DateTime _firstDayOfTheweek = startOfDay(today.subtract(new Duration(days: today.weekday)));
+      DateTime _lastDayOfTheweek = endOfDay(_firstDayOfTheweek.add(new Duration(days: 7)));
+
+      print(_firstDayOfTheweek);
+      print(_lastDayOfTheweek);
+
+      QuerySnapshot _myDoc = await
+        Firestore
+          .instance
+          .collection('pizza-list')
+          .where('date', isGreaterThanOrEqualTo: _firstDayOfTheweek)
+          .where('date', isLessThanOrEqualTo: _lastDayOfTheweek)
+          .getDocuments();
+
+      List<DocumentSnapshot> _myDocCount = _myDoc.documents;
+      print(_myDocCount.length);
+    }
+    break;
+  }
+
+}
+
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   final pizza = Pizza.fromSnapshot(data);
 
@@ -68,6 +118,8 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
 }
 
 Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+  getEntries('week');
+
   Padding infoCard = Padding(
     padding: EdgeInsets.all(8),
     child: Card(
@@ -75,7 +127,25 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
         padding: EdgeInsets.all(16.0),
         child: Row(
           children: <Widget>[
-            Text('Hi there'),
+            Text('Week: '),
+              Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.all(Radius.circular(40))
+                ),
+                child: Center(
+                  child: Text(
+                    '20',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                    ),
+                    textAlign: TextAlign.center
+                  ),
+                )
+              )
           ],
         ),
       ),
@@ -102,13 +172,13 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
 }
 
 void _settingModalBottomSheet(context) {
-  showBottomSheet(
+  showModalBottomSheet(
       context: context,
       builder: (BuildContext bc) {
         return GestureDetector(
-
+          behavior: HitTestBehavior.opaque,
+          onTap: () {},
           child: MyCustomForm(),
         );
-
       });
 }
