@@ -86,8 +86,8 @@ void getEntries(mode) async {
       DateTime _firstDayOfTheweek = startOfDay(today.subtract(new Duration(days: today.weekday)));
       DateTime _lastDayOfTheweek = endOfDay(_firstDayOfTheweek.add(new Duration(days: 7)));
 
-      print(_firstDayOfTheweek);
-      print(_lastDayOfTheweek);
+      // print(_firstDayOfTheweek);
+      // print(_lastDayOfTheweek);
 
       QuerySnapshot _myDoc = await
         Firestore
@@ -101,8 +101,20 @@ void getEntries(mode) async {
       print(_myDocCount.length);
     }
     break;
-  }
 
+    case 'month': {
+      DateTime _firstDayOfMonth = DateTime(today.year, today.month);
+
+      // Find the last day of the month.
+      DateTime _lastDayOfMonth = (today.month < 12) ?
+        new DateTime(today.year, today.month + 1, 0, 23, 59, 59) :
+        new DateTime(today.year + 1, 1, 0, 23, 59, 59);
+
+      print(_firstDayOfMonth);
+      print(_lastDayOfMonth);
+    }
+    break;
+  }
 }
 
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
@@ -118,37 +130,89 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
 }
 
 Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
-  getEntries('week');
+  getEntries('month');
 
   Padding infoCard = Padding(
     padding: EdgeInsets.all(8),
     child: Card(
-      child: Container(
-        padding: EdgeInsets.all(16.0),
+      child: Padding(
+        padding: EdgeInsets.all(8),
+        child: SizedBox(
+        height: 60,
+
         child: Row(
-          children: <Widget>[
-            Text('Week: '),
-              Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  color: Colors.amber,
-                  borderRadius: BorderRadius.all(Radius.circular(40))
-                ),
-                child: Center(
-                  child: Text(
-                    '20',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            // Week
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Week'),
+                Material(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(40)),
+                  ),
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.all(Radius.circular(40))
                     ),
-                    textAlign: TextAlign.center
+                    child: Center(
+                      child: Text(
+                        '20',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                        ),
+                        textAlign: TextAlign.center
+                      ),
+                    )
                   ),
                 )
-              )
+              ],
+            ),
+            // Month
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Month'),
+                Material(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(40)),
+                  ),
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.all(Radius.circular(40)),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '120',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                        ),
+                        textAlign: TextAlign.center
+                      ),
+                    )
+                  ),
+                ),
+              ],
+            ),
+            Column()
           ],
         ),
       ),
+      )
+
+
+
     )
   );
 
