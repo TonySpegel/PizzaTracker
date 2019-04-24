@@ -136,83 +136,78 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
     padding: EdgeInsets.all(8),
     child: Card(
       child: Padding(
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.symmetric(vertical: 16),
         child: SizedBox(
-        height: 60,
-
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            // Week
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Week'),
-                Material(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(40)),
-                  ),
-                  child: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.all(Radius.circular(40))
-                    ),
-                    child: Center(
-                      child: Text(
-                        '20',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                        ),
-                        textAlign: TextAlign.center
-                      ),
-                    )
-                  ),
-                )
-              ],
-            ),
-            // Month
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Month'),
-                Material(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(40)),
-                  ),
-                  child: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.amber,
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // Week
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Week'),
+                  Material(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(40)),
                     ),
-                    child: Center(
-                      child: Text(
-                        '120',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                        ),
-                        textAlign: TextAlign.center
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.all(Radius.circular(40))
                       ),
-                    )
+                      child: Center(
+                        child: Text(
+                          '20',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                          ),
+                          textAlign: TextAlign.center
+                        ),
+                      )
+                    ),
+                  )
+                ],
+              ),
+              // Month
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Month'),
+                  Material(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(40)),
+                    ),
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.all(Radius.circular(40)),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '120',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                          ),
+                          textAlign: TextAlign.center
+                        ),
+                      )
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Column()
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
       )
-
-
-
     )
   );
 
