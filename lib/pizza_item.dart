@@ -68,7 +68,7 @@ class PizzaItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print({this.pizza});
+    // print({this.pizza});
 
     final middleSection = Expanded(
       child: Container(

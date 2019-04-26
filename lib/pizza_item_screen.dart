@@ -78,7 +78,21 @@ DateTime endOfDay(DateTime date){
   }
 }
 
-void getEntries(mode) async {
+Future<int> numberOfSnapshotEntries(DateTime startDate, DateTime endDate) async {
+  QuerySnapshot fireStoreSnapshot = await
+    Firestore
+      .instance
+      .collection('pizza-list')
+      .where('date', isGreaterThanOrEqualTo: startDate)
+      .where('date', isLessThanOrEqualTo: endDate)
+      .getDocuments();
+
+    List<DocumentSnapshot> documentCount = fireStoreSnapshot.documents;
+
+    return documentCount.length;
+}
+
+getEntries(mode) async {
   DateTime today = todayUtc();
 
   switch(mode) {
@@ -86,19 +100,8 @@ void getEntries(mode) async {
       DateTime _firstDayOfTheweek = startOfDay(today.subtract(new Duration(days: today.weekday)));
       DateTime _lastDayOfTheweek = endOfDay(_firstDayOfTheweek.add(new Duration(days: 7)));
 
-      // print(_firstDayOfTheweek);
-      // print(_lastDayOfTheweek);
-
-      QuerySnapshot _myDoc = await
-        Firestore
-          .instance
-          .collection('pizza-list')
-          .where('date', isGreaterThanOrEqualTo: _firstDayOfTheweek)
-          .where('date', isLessThanOrEqualTo: _lastDayOfTheweek)
-          .getDocuments();
-
-      List<DocumentSnapshot> _myDocCount = _myDoc.documents;
-      print(_myDocCount.length);
+      int numberOfEntries = await numberOfSnapshotEntries(_firstDayOfTheweek, _lastDayOfTheweek);
+      return numberOfEntries;
     }
     break;
 
@@ -110,11 +113,43 @@ void getEntries(mode) async {
         new DateTime(today.year, today.month + 1, 0, 23, 59, 59) :
         new DateTime(today.year + 1, 1, 0, 23, 59, 59);
 
-      print(_firstDayOfMonth);
-      print(_lastDayOfMonth);
+      return await numberOfSnapshotEntries(_firstDayOfMonth, _lastDayOfMonth);
     }
     break;
   }
+}
+
+Widget buildInfoCircle(String labelText, int numberOfPizza) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Text(labelText),
+      Material(
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(40)),
+        ),
+        child: Container(
+          height: 40,
+          width: 40,
+          decoration: BoxDecoration(
+            color: Colors.amber,
+            borderRadius: BorderRadius.all(Radius.circular(40))
+          ),
+          child: Center(
+            child: Text(
+              numberOfPizza.toString(),
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
+              ),
+              textAlign: TextAlign.center
+            ),
+          )
+        ),
+      )
+    ],
+  );
 }
 
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
@@ -130,7 +165,9 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
 }
 
 Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
-  getEntries('month');
+  print(
+    getEntries('week')
+  );
 
   Padding infoCard = Padding(
     padding: EdgeInsets.all(8),
@@ -142,68 +179,10 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              // Week
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Week'),
-                  Material(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(40)),
-                    ),
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.all(Radius.circular(40))
-                      ),
-                      child: Center(
-                        child: Text(
-                          '20',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                          ),
-                          textAlign: TextAlign.center
-                        ),
-                      )
-                    ),
-                  )
-                ],
-              ),
-              // Month
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Month'),
-                  Material(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(40)),
-                    ),
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.all(Radius.circular(40)),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '120',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                          ),
-                          textAlign: TextAlign.center
-                        ),
-                      )
-                    ),
-                  ),
-                ],
-              ),
+              buildInfoCircle('Week', 4),
+              buildInfoCircle('Month', 12),
+              buildInfoCircle('Year', 36),
+              buildInfoCircle('All', 100),
             ],
           ),
         ),
