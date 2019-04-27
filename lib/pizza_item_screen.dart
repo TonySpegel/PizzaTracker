@@ -87,21 +87,21 @@ Future<int> numberOfSnapshotEntries(DateTime startDate, DateTime endDate) async 
       .where('date', isLessThanOrEqualTo: endDate)
       .getDocuments();
 
-    List<DocumentSnapshot> documentCount = fireStoreSnapshot.documents;
+  List<DocumentSnapshot> documentCount = fireStoreSnapshot.documents;
 
-    return documentCount.length;
+  return documentCount.length;
 }
 
-getEntries(mode) async {
+Future<int> getEntries(mode) async {
   DateTime today = todayUtc();
+  int numberOfEntries;
 
   switch(mode) {
     case 'week': {
       DateTime _firstDayOfTheweek = startOfDay(today.subtract(new Duration(days: today.weekday)));
       DateTime _lastDayOfTheweek = endOfDay(_firstDayOfTheweek.add(new Duration(days: 7)));
 
-      int numberOfEntries = await numberOfSnapshotEntries(_firstDayOfTheweek, _lastDayOfTheweek);
-      return numberOfEntries;
+      numberOfEntries = await numberOfSnapshotEntries(_firstDayOfTheweek, _lastDayOfTheweek);
     }
     break;
 
@@ -113,10 +113,17 @@ getEntries(mode) async {
         new DateTime(today.year, today.month + 1, 0, 23, 59, 59) :
         new DateTime(today.year + 1, 1, 0, 23, 59, 59);
 
-      return await numberOfSnapshotEntries(_firstDayOfMonth, _lastDayOfMonth);
+      numberOfEntries = await numberOfSnapshotEntries(_firstDayOfMonth, _lastDayOfMonth);
+    }
+    break;
+
+    default: {
+      numberOfEntries = 0;
     }
     break;
   }
+
+  return numberOfEntries;
 }
 
 Widget buildInfoCircle(String labelText, int numberOfPizza) {
@@ -164,10 +171,9 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   );
 }
 
-Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
-  print(
-    getEntries('week')
-  );
+_buildList(BuildContext context, List<DocumentSnapshot> snapshot) async {
+  int weekNumber = await getEntries('week');
+  int monthNumber = await getEntries('month');
 
   Padding infoCard = Padding(
     padding: EdgeInsets.all(8),
@@ -179,8 +185,8 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              buildInfoCircle('Week', 4),
-              buildInfoCircle('Month', 12),
+              buildInfoCircle('Week', weekNumber),
+              buildInfoCircle('Month', monthNumber),
               buildInfoCircle('Year', 36),
               buildInfoCircle('All', 100),
             ],
