@@ -98,17 +98,21 @@ Future<int> getEntries(mode) async {
 
   switch(mode) {
     case 'week':
-      DateTime _firstDayOfTheweek = startOfDay(today.subtract(new Duration(days: today.weekday)));
+      DateTime _firstDayOfTheweek;
+
+      if (today.weekday == 1) {
+        _firstDayOfTheweek = startOfDay(today);
+        print(_firstDayOfTheweek);
+      } else {
+        _firstDayOfTheweek = today.subtract(new Duration(days: today.weekday));
+      }
+
       DateTime _lastDayOfTheweek = endOfDay(_firstDayOfTheweek.add(new Duration(days: 7)));
 
-      print('heute: ' + today.toString());
       print('start: ' + _firstDayOfTheweek.toString());
-      print(_lastDayOfTheweek);
-
-      print(today.weekday);
+      print('ende: ' + _lastDayOfTheweek.toString());
 
       numberOfEntries = await numberOfSnapshotEntries(_firstDayOfTheweek, _lastDayOfTheweek);
-
 
       break;
 
