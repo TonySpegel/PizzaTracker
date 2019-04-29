@@ -97,15 +97,22 @@ Future<int> getEntries(mode) async {
   int numberOfEntries;
 
   switch(mode) {
-    case 'week': {
+    case 'week':
       DateTime _firstDayOfTheweek = startOfDay(today.subtract(new Duration(days: today.weekday)));
       DateTime _lastDayOfTheweek = endOfDay(_firstDayOfTheweek.add(new Duration(days: 7)));
 
-      numberOfEntries = await numberOfSnapshotEntries(_firstDayOfTheweek, _lastDayOfTheweek);
-    }
-    break;
+      print('heute: ' + today.toString());
+      print('start: ' + _firstDayOfTheweek.toString());
+      print(_lastDayOfTheweek);
 
-    case 'month': {
+      print(today.weekday);
+
+      numberOfEntries = await numberOfSnapshotEntries(_firstDayOfTheweek, _lastDayOfTheweek);
+
+
+      break;
+
+    case 'month':
       DateTime _firstDayOfMonth = DateTime(today.year, today.month);
 
       // Find the last day of the month.
@@ -114,23 +121,31 @@ Future<int> getEntries(mode) async {
         new DateTime(today.year + 1, 1, 0, 23, 59, 59);
 
       numberOfEntries = await numberOfSnapshotEntries(_firstDayOfMonth, _lastDayOfMonth);
-    }
-    break;
 
-    default: {
+      break;
+
+    case 'year':
+      // DateTime _firstDayOfMonth = DateTime(today.year);
+      // print(_firstDayOfMonth);
+
+      break;
+
+    default:
       numberOfEntries = 0;
-    }
-    break;
+
+      break;
   }
 
   return numberOfEntries;
 }
 
 Widget buildInfoCircle(String labelText, int numberOfPizza) {
+  String displayName = labelText[0].toUpperCase() + labelText.substring(1);
+
   return Column(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Text(labelText),
+      Text(displayName),
       Material(
         elevation: 4,
         shape: RoundedRectangleBorder(
@@ -171,9 +186,19 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   );
 }
 
-_buildList(BuildContext context, List<DocumentSnapshot> snapshot) async {
-  int weekNumber = await getEntries('week');
-  int monthNumber = await getEntries('month');
+buildCircle(mode) {
+  return FutureBuilder(
+    future: getEntries(mode),
+    builder: (context, futureResult) {
+      return buildInfoCircle(mode, futureResult.data);
+    },
+  );
+}
+
+Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+  // DateTime today = todayUtc();
+
+  // print(DateTime(today.year));
 
   Padding infoCard = Padding(
     padding: EdgeInsets.all(8),
@@ -185,10 +210,8 @@ _buildList(BuildContext context, List<DocumentSnapshot> snapshot) async {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              buildInfoCircle('Week', weekNumber),
-              buildInfoCircle('Month', monthNumber),
-              buildInfoCircle('Year', 36),
-              buildInfoCircle('All', 100),
+              buildCircle('week'),
+              buildCircle('month'),
             ],
           ),
         ),
