@@ -99,18 +99,20 @@ Future<int> getEntries(mode) async {
   switch(mode) {
     case 'week':
       DateTime _firstDayOfTheweek;
+      DateTime _lastDayOfTheweek;
 
       if (today.weekday == 1) {
         _firstDayOfTheweek = startOfDay(today);
-        print(_firstDayOfTheweek);
+        _lastDayOfTheweek = endOfDay(_firstDayOfTheweek.add(new Duration(days: 6)));
       } else {
-        _firstDayOfTheweek = today.subtract(new Duration(days: today.weekday));
+        _firstDayOfTheweek = today.subtract(new Duration(days: today.weekday - 1));
+        _lastDayOfTheweek = endOfDay(_firstDayOfTheweek.add(new Duration(days: 6)));
       }
 
-      DateTime _lastDayOfTheweek = endOfDay(_firstDayOfTheweek.add(new Duration(days: 7)));
-
-      print('start: ' + _firstDayOfTheweek.toString());
-      print('ende: ' + _lastDayOfTheweek.toString());
+      // print('tag: ' + today.weekday.toString());
+      // print('heute: ' + today.toString());
+      // print('start: ' + _firstDayOfTheweek.toString());
+      // print('ende: ' + _lastDayOfTheweek.toString());
 
       numberOfEntries = await numberOfSnapshotEntries(_firstDayOfTheweek, _lastDayOfTheweek);
 
@@ -129,8 +131,18 @@ Future<int> getEntries(mode) async {
       break;
 
     case 'year':
-      // DateTime _firstDayOfMonth = DateTime(today.year);
-      // print(_firstDayOfMonth);
+      DateTime _firstDayOfYear = DateTime(today.year);
+      DateTime _lastDayOfYear = endOfDay(DateTime(today.year, 12, 31));
+
+      numberOfEntries = await numberOfSnapshotEntries(_firstDayOfYear, _lastDayOfYear);
+
+      break;
+
+    case 'all':
+      DateTime _longTimeAgo = DateTime.utc(2016, 01, 01);
+      DateTime _lastDayOfYear = endOfDay(DateTime(today.year, 12, 31));
+
+      numberOfEntries = await numberOfSnapshotEntries(_longTimeAgo, _lastDayOfYear);
 
       break;
 
@@ -216,6 +228,8 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
             children: [
               buildCircle('week'),
               buildCircle('month'),
+              buildCircle('year'),
+              buildCircle('all'),
             ],
           ),
         ),

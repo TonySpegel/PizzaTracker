@@ -34,37 +34,25 @@ class PizzaItem extends StatelessWidget {
 
   PizzaItem({this.pizza});
 
-  //
-  // Define Layout Elements
-  //
-  final leftSection = Container(
-    child: CircleAvatar(
-      backgroundImage: NetworkImage(
-          'https://cdn.pixabay.com/photo/2016/03/31/19/58/avatar-1295429_960_720.png'),
-      backgroundColor: Colors.amber,
-      radius: 24.0,
-    ),
-  );
+  Widget buildTopping(topings) {
+    List<Chip> topingChips = [];
 
-  final rightSection = Container(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: <Widget>[
-        Text(
-          '9:50',
-          style: TextStyle(color: Colors.lightGreen, fontSize: 12.0),
-        ),
-        CircleAvatar(
-          backgroundColor: Colors.black38,
-          radius: 10.0,
-          child: Text(
-            '1',
-            style: TextStyle(color: Colors.white, fontSize: 12.0),
-          ),
-        )
-      ],
-    ),
-  );
+    topingChips = topings.map<Chip>(
+      (toping) => Chip(
+        label: Text(toping),
+        backgroundColor: Colors.amberAccent,
+      )
+    )
+    .toList();
+
+    return Container(
+      child: Wrap(
+        children: topingChips,
+        spacing: 8,
+        runSpacing: -5,
+      )
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,10 +73,7 @@ class PizzaItem extends StatelessWidget {
                 fontSize: 16.0,
               ),
             ),
-            Text(
-              pizza.topings.join(', '),
-              style: TextStyle(color: Colors.grey),
-            ),
+            buildTopping(pizza.topings),
           ],
         ),
       ),
@@ -100,7 +85,7 @@ class PizzaItem extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[leftSection, middleSection, rightSection],
+          children: [middleSection],
         )
       )
     );
