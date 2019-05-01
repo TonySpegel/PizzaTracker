@@ -212,13 +212,11 @@ buildCircle(mode) {
 }
 
 Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
-  // DateTime today = todayUtc();
-
-  // print(DateTime(today.year));
-
   Padding infoCard = Padding(
-    padding: EdgeInsets.all(8),
+    padding: EdgeInsets.only(top: 8, left: 8, right: 8),
     child: Card(
+      shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(12)),
+      color: Colors.amber[100],
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 16),
         child: SizedBox(
@@ -243,7 +241,7 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
   );
 
   Column wrapper = Column(
-    children: <Widget>[
+    children: [
       infoCard,
       Expanded(
         child: Container(
@@ -258,12 +256,13 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
 
 void _settingModalBottomSheet(context) {
   showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc) {
-        return GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {},
-          child: MyCustomForm(),
-        );
-      });
+    context: context,
+    builder: (BuildContext bc) {
+      return GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {},
+        child: MyCustomForm(),
+      );
+    }
+  );
 }

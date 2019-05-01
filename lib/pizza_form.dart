@@ -21,15 +21,13 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey we created above
-
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
       child: Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
+          children: [
             Padding(
               padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
               child: Text(
@@ -85,7 +83,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
+                  children: [
                     Text('Add new'),
                     Icon(Icons.local_pizza),
                   ],
