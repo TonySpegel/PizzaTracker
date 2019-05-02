@@ -14,6 +14,7 @@ class Pizza {
   final double quantity;
   final List topings;
   final List type;
+  final String place;
 
   Pizza.fromMap(Map<String, dynamic> map, {this.reference})
       : assert(map['name'] != null),
@@ -21,11 +22,13 @@ class Pizza {
         assert(map['date'] != null),
         assert(map['topings'] != null),
         assert(map['type'] != null),
+        assert(map['place'] != null),
         name = map['name'],
         quantity = map['quantity'].toDouble(),
         date = map['date'],
         topings = map['topings'],
-        type = map['type'];
+        type = map['type'],
+        place = map['place'];
 
   Pizza.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, reference: snapshot.reference);
@@ -34,12 +37,14 @@ class Pizza {
   String toString() => "Pizza<$name:$quantity:$date:$topings>";
 }
 
-class PizzaItem extends StatelessWidget {
-  final Pizza pizza;
+class Topings extends StatelessWidget {
+  final List topings;
 
-  PizzaItem({this.pizza});
+  // Constructor
+  const Topings(this.topings);
 
-  Widget buildTopping(topings) {
+  @override
+  Widget build(BuildContext context) {
     List<Chip> topingChips = [];
 
     topingChips = topings.map<Chip>(
@@ -56,8 +61,16 @@ class PizzaItem extends StatelessWidget {
       runSpacing: -5,
     );
   }
+}
 
-  Widget buildTypes(types) {
+class Types extends StatelessWidget {
+  final List types;
+
+  // Constructor
+  const Types(this.types);
+
+  @override
+  Widget build(BuildContext context) {
     List<IconButton> typeIconButtons = [];
 
     typeIconButtons = types.map<IconButton>(
@@ -123,9 +136,18 @@ class PizzaItem extends StatelessWidget {
       children: typeIconButtons,
     );
   }
+}
+
+class PizzaItem extends StatelessWidget {
+  final Pizza pizza;
+
+  PizzaItem({this.pizza});
 
   @override
   Widget build(BuildContext context) {
+    String format(double n) {
+      return n.toStringAsFixed(n.truncateToDouble() == n ? 0 : 1);
+    }
 
     Row nameAndTimeStamp = Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,13 +160,16 @@ class PizzaItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                pizza.name,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18.0,
-                ),
+              Tooltip(
+                message: "${format(pizza.quantity)} | ${pizza.place}",
+                child: Text(
+                  pizza.name,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18.0,
+                  ),
+                )
               ),
             ],
             ),
@@ -183,14 +208,14 @@ class PizzaItem extends StatelessWidget {
           flex: 7,
           child: Container(
             child: Wrap(
-              children: [ buildTopping(pizza.topings) ],
+              children: [ Topings(pizza.topings) ],
             ),
           ),
         ),
         Expanded(
           flex: 3,
           child: Container(
-            child: buildTypes(pizza.type),
+            child: Types(pizza.type),
           ),
         ),
       ],
