@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'pizza_item.dart';
 import 'pizza_form.dart';
 import 'package:flutter/foundation.dart';
+import 'date_utils.dart';
 
 // FireStore
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -55,29 +56,6 @@ Widget _buildBody(BuildContext context) {
   );
 }
 
-DateTime todayUtc(){
-  DateTime now = new DateTime.now();
-  return startOfDay(new DateTime.utc(now.year, now.month, now.day));
-}
-
-DateTime startOfDay(DateTime date){
-  if (date == null) return null;
-  if (date.isUtc) {
-    return new DateTime.utc(date.year, date.month, date.day, 0, 0, 0);
-  } else {
-    return new DateTime(date.year, date.month, date.day, 0, 0, 0);
-  }
-}
-
-DateTime endOfDay(DateTime date){
-  if (date == null) return null;
-  if (date.isUtc) {
-    return new DateTime.utc(date.year, date.month, date.day, 23, 59, 59);
-  } else {
-    return new DateTime(date.year, date.month, date.day, 23, 59, 59);
-  }
-}
-
 Future<int> numberOfSnapshotEntries(DateTime startDate, DateTime endDate) async {
   QuerySnapshot fireStoreSnapshot = await
     Firestore
@@ -109,25 +87,14 @@ Future<int> getEntries(mode) async {
         _lastDayOfTheweek = endOfDay(_firstDayOfTheweek.add(new Duration(days: 6)));
       }
 
-      // print('tag: ' + today.weekday.toString());
-      // print('heute: ' + today.toString());
-      // print('start: ' + _firstDayOfTheweek.toString());
-      // print('ende: ' + _lastDayOfTheweek.toString());
-
       numberOfEntries = await numberOfSnapshotEntries(_firstDayOfTheweek, _lastDayOfTheweek);
-
       break;
 
     case 'month':
-      DateTime _firstDayOfMonth = DateTime(today.year, today.month);
-
-      // Find the last day of the month.
-      DateTime _lastDayOfMonth = (today.month < 12) ?
-        new DateTime(today.year, today.month + 1, 0, 23, 59, 59) :
-        new DateTime(today.year + 1, 1, 0, 23, 59, 59);
+      DateTime _firstDayOfMonth = firstDayOfMonth(today);
+      DateTime _lastDayOfMonth = lastDayOfMonth(today);
 
       numberOfEntries = await numberOfSnapshotEntries(_firstDayOfMonth, _lastDayOfMonth);
-
       break;
 
     case 'year':
@@ -135,7 +102,6 @@ Future<int> getEntries(mode) async {
       DateTime _lastDayOfYear = endOfDay(DateTime(today.year, 12, 31));
 
       numberOfEntries = await numberOfSnapshotEntries(_firstDayOfYear, _lastDayOfYear);
-
       break;
 
     case 'all':
@@ -143,12 +109,10 @@ Future<int> getEntries(mode) async {
       DateTime _lastDayOfYear = endOfDay(DateTime(today.year, 12, 31));
 
       numberOfEntries = await numberOfSnapshotEntries(_longTimeAgo, _lastDayOfYear);
-
       break;
 
     default:
       numberOfEntries = 0;
-
       break;
   }
 
@@ -191,7 +155,7 @@ Widget buildInfoCircle(String labelText, int numberOfPizza) {
 }
 
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
-  final pizza = Pizza.fromSnapshot(data);
+  Pizza pizza = Pizza.fromSnapshot(data);
 
   return Padding(
     key: ValueKey(pizza.name),
@@ -204,7 +168,9 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
 
 buildCircle(mode) {
   return FutureBuilder(
+    // Wait for Future of getEntries to resolve
     future: getEntries(mode),
+    // Use its Result to build a Widget
     builder: (context, futureResult) {
       return buildInfoCircle(mode, futureResult.data);
     },
