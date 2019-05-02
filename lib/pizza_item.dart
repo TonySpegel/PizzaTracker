@@ -51,9 +51,9 @@ class PizzaItem extends StatelessWidget {
     .toList();
 
     return Wrap(
-        children: topingChips,
-        spacing: 8,
-        runSpacing: -5,
+      children: topingChips,
+      spacing: 8,
+      runSpacing: -5,
     );
   }
 
@@ -127,63 +127,82 @@ class PizzaItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final middleSection = Expanded(
-      child: Container(
-        padding: EdgeInsets.only(left: 8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  flex: 7,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        pizza.name,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18.0,
-                        ),
-                      ),
-                    ],
-                  ),
+    Row nameAndTimeStamp = Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 7,
+          child: Container(
+            // color: Colors.amberAccent,
+            child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                pizza.name,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18.0,
                 ),
-                Expanded(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(DateFormat('yyyy-MM-dd').format(pizza.date)),
-                      Text(DateFormat('HH:mm').format(pizza.date)),
-                    ],
-                  )
-
-                )
-              ],
+              ),
+            ],
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          )
+        ),
+        Expanded(
+          flex: 3,
+          child: Container(
+            // color: Colors.amberAccent,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Expanded(
-                  flex: 7,
-                  child: Container(
-                    child: Wrap(
-                      children: [ buildTopping(pizza.topings) ],
-                    ),
+                Text(
+                  DateFormat('yyyy.MM.dd').format(pizza.date),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600
                   ),
                 ),
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    child: buildTypes(pizza.type),
+                Text(
+                  DateFormat('HH:mm').format(pizza.date),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600
                   ),
                 ),
               ],
             )
+          )
+        )
+      ],
+    );
+
+    Row topingsAndTypes = Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 7,
+          child: Container(
+            child: Wrap(
+              children: [ buildTopping(pizza.topings) ],
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 3,
+          child: Container(
+            child: buildTypes(pizza.type),
+          ),
+        ),
+      ],
+    );
+
+    Expanded cardElements = Expanded(
+      child: Container(
+        // color: Colors.black12,
+        child: Column(
+          children: [
+            nameAndTimeStamp,
+            topingsAndTypes,
           ],
         ),
       ),
@@ -196,7 +215,7 @@ class PizzaItem extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [middleSection],
+          children: [cardElements],
         )
       )
     );
