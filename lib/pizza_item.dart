@@ -4,6 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:intl/intl.dart';
 
+import 'pizza_item_type.dart';
+import 'pizza_item_toping.dart';
+
 //
 // Pizza Record
 //
@@ -35,107 +38,6 @@ class Pizza {
 
   @override
   String toString() => "Pizza<$name:$quantity:$date:$topings>";
-}
-
-class Topings extends StatelessWidget {
-  final List topings;
-
-  // Constructor
-  const Topings(this.topings);
-
-  @override
-  Widget build(BuildContext context) {
-    List<Chip> topingChips = [];
-
-    topingChips = topings.map<Chip>(
-      (toping) => Chip(
-        label: Text(toping),
-        backgroundColor: Colors.amber[200],
-      )
-    )
-    .toList();
-
-    return Wrap(
-      children: topingChips,
-      spacing: 8,
-      runSpacing: -5,
-    );
-  }
-}
-
-class Types extends StatelessWidget {
-  final List types;
-
-  // Constructor
-  const Types(this.types);
-
-  @override
-  Widget build(BuildContext context) {
-    List<IconButton> typeIconButtons = [];
-
-    typeIconButtons = types.map<IconButton>(
-      (type) {
-        type = type.toString().toLowerCase();
-
-        switch (type) {
-          case 'tkp':
-            return IconButton(
-              icon: Icon(Icons.ac_unit),
-              tooltip: 'TKP',
-              onPressed: () {},
-            );
-            break;
-
-          case 'delivery':
-            return IconButton(
-              icon: Icon(Icons.local_shipping),
-              tooltip: 'Delivery',
-              onPressed: () {},
-            );
-            break;
-
-          case 'restaurant':
-            return IconButton(
-              icon: Icon(Icons.restaurant),
-              tooltip: 'Restaurant',
-              onPressed: () {},
-            );
-            break;
-
-          case 'selfmade':
-            return IconButton(
-              icon: Icon(Icons.person),
-              tooltip: 'Selfmade',
-              onPressed: () {},
-            );
-            break;
-
-          case 'franchise':
-            return IconButton(
-              icon: Icon(Icons.domain),
-              tooltip: 'Franchise',
-              onPressed: () {},
-            );
-            break;
-
-          case 'familienpizza':
-            return IconButton(
-              icon: Icon(Icons.supervisor_account),
-              tooltip: 'Family',
-              onPressed: () {},
-            );
-            break;
-
-          default:
-        }
-      }
-    )
-    .toList();
-
-    return Wrap(
-      children: typeIconButtons,
-    );
-  }
 }
 
 class PizzaItem extends StatelessWidget {
