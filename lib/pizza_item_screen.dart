@@ -1,6 +1,6 @@
 /// s/o https://github.com/PoojaB26/LayoutsFlutter/blob/master/lib/chat_item.dart
 import 'package:flutter/material.dart';
-import 'pizza_item.dart';
+import 'pizza_item/pizza_item.dart';
 import 'pizza_form.dart';
 import 'package:flutter/foundation.dart';
 import 'date_utils.dart';
