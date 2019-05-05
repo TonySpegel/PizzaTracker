@@ -19,6 +19,17 @@ class PizzaTracker extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: new PizzaItemScreen(),
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(color: Colors.amber),
+        cursorColor: Colors.amber,
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.amber, width: 1.0),
+          ),
+          labelStyle: TextStyle(color: Colors.amber)
+        )
+      ),
     );
   }
 }
