@@ -1,9 +1,11 @@
 /// s/o https://github.com/PoojaB26/LayoutsFlutter/blob/master/lib/chat_item.dart
 import 'package:flutter/material.dart';
 import 'pizza_item/pizza_item.dart';
-import 'pizza_form.dart';
+import 'pizza_form/pizza_form.dart';
 import 'package:flutter/foundation.dart';
 import 'date_utils.dart';
+
+import 'pizza.dart';
 
 // FireStore
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,7 +16,6 @@ class PizzaItemScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('🍕 Tracker'),
-        backgroundColor: Colors.amber,
       ),
       body: _buildBody(context),
       floatingActionButton: FloatingActionButton(
@@ -227,7 +228,7 @@ void _settingModalBottomSheet(context) {
       return GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {},
-        child: MyCustomForm(),
+        child: PizzaForm(),
       );
     }
   );
