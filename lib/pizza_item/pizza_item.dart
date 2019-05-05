@@ -1,49 +1,23 @@
-import 'package:flutter/material.dart';
-// FireStore
-import 'package:cloud_firestore/cloud_firestore.dart';
+//
+// Represents a Pizza with its Properties stored within my Firestore.
+// Some of these Properties are: Name, Topings, Types, Date etc.
+//
+// Copyright 2019 Tony Spegel
+//
 
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import '../pizza.dart';
 
 import 'pizza_item_type.dart';
 import 'pizza_item_toping.dart';
 
-//
-// Pizza Record
-//
-class Pizza {
-  final DateTime date;
-  final DocumentReference reference;
-  final String name;
-  final double quantity;
-  final List topings;
-  final List type;
-  final String place;
-
-  Pizza.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['name'] != null),
-        assert(map['quantity'] != null),
-        assert(map['date'] != null),
-        assert(map['topings'] != null),
-        assert(map['type'] != null),
-        assert(map['place'] != null),
-        name = map['name'],
-        quantity = map['quantity'].toDouble(),
-        date = map['date'],
-        topings = map['topings'],
-        type = map['type'],
-        place = map['place'];
-
-  Pizza.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data, reference: snapshot.reference);
-
-  @override
-  String toString() => "Pizza<$name:$quantity:$date:$topings>";
-}
 
 class PizzaItem extends StatelessWidget {
   final Pizza pizza;
 
-  PizzaItem({this.pizza});
+  PizzaItem({ this.pizza });
 
   @override
   Widget build(BuildContext context) {
@@ -59,21 +33,21 @@ class PizzaItem extends StatelessWidget {
           child: Container(
             // color: Colors.amberAccent,
             child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Tooltip(
-                message: "${format(pizza.quantity)} | ${pizza.place}",
-                child: Text(
-                  pizza.name,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                  ),
-                )
-              ),
-            ],
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Tooltip(
+                  message: '${format(pizza.quantity)} | ${pizza.place}',
+                  child: Text(
+                    pizza.name,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18.0,
+                    ),
+                  )
+                ),
+              ],
             ),
           )
         ),
