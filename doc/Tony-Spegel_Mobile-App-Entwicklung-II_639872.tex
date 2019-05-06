@@ -1,0 +1,119 @@
+\documentclass[12pt]{article}
+
+\usepackage[
+    left=3cm,
+    right=2cm,
+    top=1.5cm,
+    bottom=1cm,
+    includeheadfoot
+]{geometry}
+
+\usepackage{pdfpages}
+\usepackage{helvet}				        % Font similiar to Arial
+\usepackage{chapter/titlesec/titlesec}  % to allow custom headings
+\usepackage[utf8]{inputenc}		        % UTF8 to allow öäü
+\usepackage{ragged2e}
+
+\usepackage{graphicx}
+\graphicspath{ {img/} }			        % Path for images
+
+\usepackage{cite}                       % Citations
+
+\usepackage{caption, subcaption}
+
+\usepackage[
+    nohyperlinks,
+    withpage,
+    smaller
+]{acronym}                              % Acronyms
+
+\usepackage[                            % Meta-Data
+    pdftex,
+    pdfauthor={Tony Spegel},
+    pdftitle={
+        Entwicklung einer Cross-Plattform-App
+        zur Erfassung von Meta-Daten kohlenhydrat-basierter Lebensmittel
+    },
+    pdfsubject={Free Rooms App von Tony Spegel},
+    pdfkeywords={
+        Web-App,
+        Snegon,
+        EAH,
+        Freie Räume,
+        Free Rooms
+    },
+    pdfproducer={LaTeX},
+    pdfcreator={pdflatex}
+]{hyperref}
+
+\usepackage{color}
+\usepackage{upquote}
+\usepackage{listings}
+\usepackage{float}
+
+% Line-Height of 1.5
+\linespread{1.213}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Rename different indexes
+\renewcommand{\contentsname}{Inhaltsverzeichnis}
+\renewcommand{\listfigurename}{Abbildungsverzeichnis}
+\renewcommand{\listtablename}{Tabellenverzeichnis}
+\renewcommand{\refname}{Literaturverzeichnis}
+
+% Rename captions
+\renewcommand\figurename{Abb.}
+\renewcommand\tablename{Tab.}
+
+% Command to render a overline
+\newcommand*{\ovA}[1]{%
+  $\m@th\overline{\mbox{#1}\raisebox{3mm}{}}$%
+}
+
+\usepackage{url}
+\usepackage{nameref}
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{\autoref*{#1} \nameref*{#1}}}
+
+\begin{document}
+
+% Heading-Settings
+\titleformat*{\section}{\fontsize{14}{17}\bfseries}
+\titleformat{\subsection} {\fontsize{12}{17}\bfseries}{\thesubsection}{1em}{}
+\titleformat*{\subsubsection}{\fontsize{12}{17}\itshape}
+\titleformat*{\paragraph}{\fontsize{12}{17}}
+
+% \includepdf[pages={1}]{Deckblatt_Praktbericht_neu--signed.pdf}
+
+\input{chapter/00_deckblatt}
+
+% Using roman numbers for non content sites (i, ii, iii, iv)
+\pagenumbering{roman}
+
+% TOC
+\tableofcontents
+\newpage
+
+% List of Acronyms
+\input{acronyms}
+\newpage
+
+% List of Figures
+\listoffigures
+\newpage
+
+% List of Tables
+\listoftables
+\newpage
+
+% Using arabic numbers for content sites (1, 2, 3, 4)
+\pagenumbering{arabic}
+
+\input{chapter/01_motivation}
+\input{chapter/08_fazit}
+\newpage
+
+% Don't use page-numbers from here on
+\pagenumbering{gobble}
+\input{chapter/_bibliography}
+
+\end{document}

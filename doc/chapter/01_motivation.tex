@@ -1,0 +1,59 @@
+\section{Motivation und Zielsetzung}
+\subsection{Motivation}
+
+Diese Hausarbeit dokumentiert die Entwicklung eines Prototyps zur
+vereinfachten Findung von unbelegten Räumen der \ac{EAH} in Anbetracht
+von Usability-Kriterien. Die Motivation diese
+Anwendung zu programmieren, entstand zunächst aus dem Bedarf heraus,
+möglichst schnell Räume zu finden, die für längere Zeit unbelegt sind.
+Dies ist besonders zur Prüfungszeit wichtig, da man des Öfteren allein oder
+in der Gruppe ungestört lernen möchte. Die Bibliothek ist kein
+geeigneter Ort um sich zu unterhalten, zwischen den Gängen
+gibt es keine Tafeln und direkt auf dem Campus ist es je nach Witterung
+auch nicht optimal, um dort zu lernen. Optimal sind demnach nur die Räume
+der EAH. Durch Diskussionen mit anderen Studierenden stellte sich heraus,
+dass es besonders wichtig ist, per Smartphone so viele freie Räume
+wie möglich angezeigt zu bekommen.
+Um herauszufinden, welche Räume belegt sind und welche nicht,
+gibt es drei Möglichkeiten:
+
+\begin{itemize}
+    \itemsep-0.4em
+    \item Räume besuchen und hoffen, dass diese nicht belegt sind
+    \item Raumbelegungsplan der EAH-Website nutzen
+    \item "Freie Räume" der der EAH-Website nutzen
+\end{itemize}
+
+Räume einen nach dem anderen zu öffnen und zu hoffen dass diese
+nicht belegt sind ist sicherlich eine der direktesten aber auch der zeitintensivsten
+Möglichkeiten um zum gewollten Ziel zu gelangen. Deutlich bequemer klingen zunächst
+die beiden anderen genannten Möglichkeiten. Die EAH bietet auf der Website\\
+\url{http://stundenplanung.eah-jena.de/raeume/} die Möglichkeit, Raum für Raum
+dessen Belegung zu prüfen. Aber auch dies ist sehr aufwendig weil ein direkter
+Vergleich nicht möglich ist. Der letzte genannte Punkt, zu finden unter
+\url{http://stundenplanung.eah-jena.de/raumsuche/} kann als eigentlicher
+Anstoß für die Entwicklung dieser Anwendung gesehen werden.
+Zu Beginn der Entwicklung war diese Funktion nicht verfügbar. Dies wurde zum Anlass genommen,
+eine Lösung zu entwickeln, die insbesondere unter Aspekten der Usability und \ac{UX} Verbesserungen
+bieten soll. Ist diese Funktion verfügbar, so bietet diese zwar grundsätzlich das gewünschte Ergebnis,
+ist aber unter Usability/UX-Aspekten als unzureichend anzusehen.
+
+\newpage
+
+\subsection{Zielsetzung}
+
+Eines der Hauptziele dieser neu zu entwickelnden Lösung soll es sein,
+dem Nutzer so schnell wie möglich - und dies ohne Benutzereingaben,
+verfügbare Räume zu präsentieren. Jeder soll diese Anwendung ohne
+Installation einer App nutzen können.
+Um die Komplexität der Anwendung gering zu halten, verzichtet
+diese auf die Verwendung einer Datenbank, auch um das Hosting
+der Anwendung zu erleichtern. Folgende Hauptziele wurden hierbei definiert:
+\begin{itemize}
+    \itemsep-0.4em
+    \item Entwicklung einer plattformunabhängigen Web-App
+    \item Keine Datenbank
+    \item "Einfache Benutzung" ohne Benutzereingaben
+    \item Filterung der Ergebnisse und Individualisierbarkeit
+\end{itemize}
+
