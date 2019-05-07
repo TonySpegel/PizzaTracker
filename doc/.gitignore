@@ -1,0 +1,23 @@
+# LaTeX
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.gz
+*.lof
+*.log
+*.lot
+*.out
+*.swp
+*.synctex.gz
+*.toc
+*.xml
+
+# VS Code
+.vscode
+
+# Misc
+.directory
+.xml
