@@ -24,7 +24,7 @@ class PizzaTracker extends StatelessWidget {
             borderSide: BorderSide(color: Colors.amber, width: 1.0),
           ),
           labelStyle: TextStyle(color: Colors.amber)
-        )
+        ),
       ),
     );
   }

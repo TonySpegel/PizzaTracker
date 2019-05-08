@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'pizza_form_type.dart';
+import 'pizza_form_name.dart';
 
 // Create a Form Widget
 class PizzaForm extends StatefulWidget {
@@ -22,7 +23,7 @@ class PizzaFormState extends State<PizzaForm> {
   // Note: This is a GlobalKey<FormState>, not a GlobalKey<PizzaFormState>!
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController nameController = TextEditingController();
+  final nameController = TextEditingController();
 
 
   Future newPizza() async {
@@ -61,17 +62,18 @@ class PizzaFormState extends State<PizzaForm> {
                 style: Theme.of(context).textTheme.headline,
               )
             ),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: '🍕 Name',
-              ),
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Enter Pizzaname';
-                }
-              },
-              controller: nameController,
-            ),
+            NameInput(controller: nameController),
+            // TextFormField(
+            //   decoration: InputDecoration(
+            //     labelText: '🍕 Name',
+            //   ),
+            //   validator: (value) {
+            //     if (value.isEmpty) {
+            //       return 'Enter Pizzaname';
+            //     }
+            //   },
+            //   controller: nameController,
+            // ),
 
             Padding(
               padding: EdgeInsets.fromLTRB(0, 16, 0, 0),

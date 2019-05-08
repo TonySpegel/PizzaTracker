@@ -50,7 +50,10 @@ Widget _buildBody(BuildContext context) {
         .snapshots(),
     builder: (context, snapshot) {
       // Show Linear Progress as long as there is no data
-      if (!snapshot.hasData) return LinearProgressIndicator();
+      if (!snapshot.hasData) return LinearProgressIndicator(
+        backgroundColor: Colors.amber,
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.amberAccent[100]),
+      );
 
       return _buildList(context, snapshot.data.documents);
     },
