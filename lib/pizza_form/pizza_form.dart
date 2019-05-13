@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'pizza_form_type.dart';
+import 'pizza_type.dart';
 import 'pizza_form_name.dart';
 
 // Create a Form Widget
@@ -63,17 +63,6 @@ class PizzaFormState extends State<PizzaForm> {
               )
             ),
             NameInput(controller: nameController),
-            // TextFormField(
-            //   decoration: InputDecoration(
-            //     labelText: '🍕 Name',
-            //   ),
-            //   validator: (value) {
-            //     if (value.isEmpty) {
-            //       return 'Enter Pizzaname';
-            //     }
-            //   },
-            //   controller: nameController,
-            // ),
 
             Padding(
               padding: EdgeInsets.fromLTRB(0, 16, 0, 0),

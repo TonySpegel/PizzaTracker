@@ -10,6 +10,8 @@ import 'pizza.dart';
 // FireStore
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:rounded_modal/rounded_modal.dart';
+
 class PizzaItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -225,14 +227,12 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
 }
 
 void _settingModalBottomSheet(context) {
-  showModalBottomSheet(
+  showRoundedModalBottomSheet(
     context: context,
-    builder: (BuildContext bc) {
-      return GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {},
-        child: PizzaForm(),
-      );
-    }
+    radius: 20.0,
+    color: Colors.white,
+    builder: (context) {
+      return PizzaForm();
+    },
   );
 }
