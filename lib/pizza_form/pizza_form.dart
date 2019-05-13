@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'pizza_type.dart';
 import 'pizza_form_name.dart';
+import 'pizza_form_quantity.dart';
 
 // Create a Form Widget
 class PizzaForm extends StatefulWidget {
@@ -24,6 +25,10 @@ class PizzaFormState extends State<PizzaForm> {
   final _formKey = GlobalKey<FormState>();
 
   final nameController = TextEditingController();
+  final quantityController = TextEditingController();
+
+  double _sliderValue = 1;
+
 
 
   Future newPizza() async {
@@ -53,58 +58,93 @@ class PizzaFormState extends State<PizzaForm> {
       child: Form(
         key: _formKey,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
-              child: Text(
-                'New 🍕',
-                style: Theme.of(context).textTheme.headline,
-              )
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: Icon(Icons.label),
+              title: NameInput(controller: nameController),
             ),
-            NameInput(controller: nameController),
-
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-              child: Text(
-                'Type',
-                style: Theme.of(context).textTheme.title,
-              )
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: Icon(Icons.looks_one),
+              title: QuantityInput(
+                controller: quantityController
+              ),
             ),
 
-            PizzaType(),
-
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-              child: Text(
-                'Place',
-                style: Theme.of(context).textTheme.title,
-              )
-            ),
-
-            Center(
-              child: RaisedButton(
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: Icon(Icons.place),
+              title:  FlatButton(
                 color: Colors.amber,
-                onPressed: () {
-                  // Validate will return true if the form is valid, or false if
-                  // the form is invalid.
-                  if (_formKey.currentState.validate()) {
-                    newPizza();
-                  }
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('Add new'),
-                    Icon(Icons.local_pizza),
-                  ],
+                onPressed: () {},
+                child: Text(
+                  'Location',
+                  style: TextStyle(fontSize: 20)
                 ),
               ),
-            )
+            ),
           ],
-        ),
-      ),
+        )
+      )
     );
   }
+    // return Padding(
+    //   padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+    //   child: Form(
+    //     key: _formKey,
+    //     child: Column(
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //       children: [
+    //         Padding(
+    //           padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
+    //           child: Text(
+    //             'New 🍕',
+    //             style: Theme.of(context).textTheme.headline,
+    //           )
+    //         ),
+    //         NameInput(controller: nameController),
+
+    //         Padding(
+    //           padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+    //           child: Text(
+    //             'Type',
+    //             style: Theme.of(context).textTheme.title,
+    //           )
+    //         ),
+
+    //         PizzaType(),
+
+    //         Padding(
+    //           padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+    //           child: Text(
+    //             'Place',
+    //             style: Theme.of(context).textTheme.title,
+    //           )
+    //         ),
+
+    //         Center(
+    //           child: RaisedButton(
+    //             color: Colors.amber,
+    //             onPressed: () {
+    //               // Validate will return true if the form is valid, or false if
+    //               // the form is invalid.
+    //               if (_formKey.currentState.validate()) {
+    //                 newPizza();
+    //               }
+    //             },
+    //             child: Row(
+    //               mainAxisAlignment: MainAxisAlignment.center,
+    //               mainAxisSize: MainAxisSize.min,
+    //               children: [
+    //                 Text('Add new'),
+    //                 Icon(Icons.local_pizza),
+    //               ],
+    //             ),
+    //           ),
+    //         )
+    //       ],
+    //     ),
+    //   ),
+    // );
 }

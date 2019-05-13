@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 // Copyright 2019 Tony Spegel
 //
 
-class NameInput extends StatefulWidget {
-  NameInput({Key key, this.controller}) : super(key: key);
+class QuantityInput extends StatefulWidget {
+  QuantityInput({Key key, this.controller}) : super(key: key);
 
   final TextEditingController controller;
 
   @override
-  _NameInputState createState() => _NameInputState();
+  _QuantityInputState createState() => _QuantityInputState();
 }
 
-class _NameInputState extends State<NameInput> {
+class _QuantityInputState extends State<QuantityInput> {
   bool _isValid = true;
 
   void _setValidity(bool state) {
@@ -27,13 +27,14 @@ class _NameInputState extends State<NameInput> {
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
-        labelText: 'Name',
+        labelText: 'Quantity',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(10),
           ),
         ),
       ),
+      keyboardType: TextInputType.number,
       validator: (value) {
         if (value.isEmpty) {
           _setValidity(false);
