@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'pizza_type.dart';
 import 'pizza_form_name.dart';
+import 'pizza_form_date.dart';
 import 'pizza_form_quantity.dart';
 
 // Create a Form Widget
@@ -26,9 +27,7 @@ class PizzaFormState extends State<PizzaForm> {
 
   final nameController = TextEditingController();
   final quantityController = TextEditingController();
-
-  double _sliderValue = 1;
-
+  final dateTimeController = TextEditingController();
 
 
   Future newPizza() async {
@@ -66,9 +65,9 @@ class PizzaFormState extends State<PizzaForm> {
             ),
             ListTile(
               contentPadding: EdgeInsets.all(0),
-              leading: Icon(Icons.looks_one),
-              title: QuantityInput(
-                controller: quantityController
+              leading: Icon(Icons.event_available),
+              title: DateInput(
+                controller: dateTimeController
               ),
             ),
 
