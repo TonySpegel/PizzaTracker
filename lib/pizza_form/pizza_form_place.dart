@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 // Copyright 2019 Tony Spegel
 //
 
-class NameInput extends StatefulWidget {
-  NameInput({Key key, this.controller}) : super(key: key);
+class PlaceInput extends StatefulWidget {
+  PlaceInput({Key key, this.controller}) : super(key: key);
 
   final TextEditingController controller;
 
   @override
-  _NameInputState createState() => _NameInputState();
+  _PlaceInputState createState() => _PlaceInputState();
 }
 
-class _NameInputState extends State<NameInput> {
+class _PlaceInputState extends State<PlaceInput> {
   bool _isValid = true;
 
   void _setValidity(bool state) {
@@ -27,7 +27,7 @@ class _NameInputState extends State<NameInput> {
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
-        labelText: 'Name',
+        labelText: 'Place',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(10),
@@ -37,13 +37,10 @@ class _NameInputState extends State<NameInput> {
       validator: (value) {
         if (value.isEmpty) {
           _setValidity(false);
-          return 'Enter Pizzaname';
+          return 'Enter Place';
         }
       },
-
       controller: widget.controller,
     );
   }
 }
-
-

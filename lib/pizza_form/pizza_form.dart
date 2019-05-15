@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'pizza_type.dart';
 import 'pizza_form_name.dart';
 import 'pizza_form_date.dart';
-import 'pizza_form_quantity.dart';
+import 'pizza_form_place.dart';
 
 // Create a Form Widget
 class PizzaForm extends StatefulWidget {
@@ -28,6 +28,7 @@ class PizzaFormState extends State<PizzaForm> {
   final nameController = TextEditingController();
   final quantityController = TextEditingController();
   final dateTimeController = TextEditingController();
+  final placeController = TextEditingController();
 
 
   Future newPizza() async {
@@ -56,7 +57,7 @@ class PizzaFormState extends State<PizzaForm> {
       padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
       child: Form(
         key: _formKey,
-        child: Column(
+        child: ListView(
           children: [
             ListTile(
               contentPadding: EdgeInsets.all(0),
@@ -66,61 +67,37 @@ class PizzaFormState extends State<PizzaForm> {
             ListTile(
               contentPadding: EdgeInsets.all(0),
               leading: Icon(Icons.event_available),
-              title: DateInput(
+              title: DateTimeLabel(
                 controller: dateTimeController
               ),
             ),
-
+            ListTile(
+              leading: Icon(Icons.widgets),
+              contentPadding: EdgeInsets.all(0),
+              title: PizzaType()
+            ),
             ListTile(
               contentPadding: EdgeInsets.all(0),
               leading: Icon(Icons.place),
-              title:  FlatButton(
-                color: Colors.amber,
-                onPressed: () {},
-                child: Text(
-                  'Location',
-                  style: TextStyle(fontSize: 20)
-                ),
-              ),
+              title: PlaceInput(controller: placeController),
             ),
+            // ListTile(
+            //   contentPadding: EdgeInsets.all(0),
+            //   leading: Icon(Icons.place),
+            //   title:  FlatButton(
+            //     color: Colors.amber,
+            //     onPressed: () {},
+            //     child: Text(
+            //       'Location',
+            //       style: TextStyle(fontSize: 20)
+            //     ),
+            //   ),
+            // ),
           ],
         )
       )
     );
   }
-    // return Padding(
-    //   padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-    //   child: Form(
-    //     key: _formKey,
-    //     child: Column(
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: [
-    //         Padding(
-    //           padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
-    //           child: Text(
-    //             'New 🍕',
-    //             style: Theme.of(context).textTheme.headline,
-    //           )
-    //         ),
-    //         NameInput(controller: nameController),
-
-    //         Padding(
-    //           padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-    //           child: Text(
-    //             'Type',
-    //             style: Theme.of(context).textTheme.title,
-    //           )
-    //         ),
-
-    //         PizzaType(),
-
-    //         Padding(
-    //           padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-    //           child: Text(
-    //             'Place',
-    //             style: Theme.of(context).textTheme.title,
-    //           )
-    //         ),
 
     //         Center(
     //           child: RaisedButton(
