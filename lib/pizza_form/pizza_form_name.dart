@@ -28,11 +28,7 @@ class _NameInputState extends State<NameInput> {
     return TextFormField(
       decoration: InputDecoration(
         labelText: 'Name',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
-        ),
+        contentPadding: EdgeInsets.all(12),
       ),
       validator: (value) {
         if (value.isEmpty) {
@@ -40,7 +36,6 @@ class _NameInputState extends State<NameInput> {
           return 'Enter Pizzaname';
         }
       },
-
       controller: widget.controller,
     );
   }

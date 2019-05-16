@@ -5,8 +5,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'pizza_type.dart';
 import 'pizza_form_name.dart';
+// DateInput
 import 'pizza_form_date.dart';
+// PlaceInput
 import 'pizza_form_place.dart';
+import 'pizza_form_toping.dart';
 
 // Create a Form Widget
 class PizzaForm extends StatefulWidget {
@@ -64,6 +67,13 @@ class PizzaFormState extends State<PizzaForm> {
               leading: Icon(Icons.label),
               title: NameInput(controller: nameController),
             ),
+            Divider(),
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: Icon(Icons.local_pizza),
+              title: TopingInput(controller: nameController),
+            ),
+            Divider(),
             ListTile(
               contentPadding: EdgeInsets.all(0),
               leading: Icon(Icons.event_available),
@@ -71,11 +81,13 @@ class PizzaFormState extends State<PizzaForm> {
                 controller: dateTimeController
               ),
             ),
+            Divider(),
             ListTile(
               leading: Icon(Icons.widgets),
               contentPadding: EdgeInsets.all(0),
               title: PizzaType()
             ),
+            Divider(),
             ListTile(
               contentPadding: EdgeInsets.all(0),
               leading: Icon(Icons.place),
