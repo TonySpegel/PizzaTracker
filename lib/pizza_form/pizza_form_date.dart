@@ -44,12 +44,12 @@ class _DateTimeLabelState extends State<DateTimeLabel> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      DateFormat('dd.MM.yyyy HH:mm').format(_currentDateTime),
-      style: TextStyle(
-        fontWeight: FontWeight.w600,
-        fontSize: 22
 
+    return Text(
+      DateFormat('dd.MM.yyyy    HH:mm').format(_currentDateTime),
+      style: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500
       ),
     );
   }

@@ -28,8 +28,10 @@ class _PlaceInputState extends State<PlaceInput> {
     return TextFormField(
       decoration: InputDecoration(
         labelText: 'Place',
-
         contentPadding: EdgeInsets.all(12),
+      ),
+      style: TextStyle(
+        fontSize: 16
       ),
       validator: (value) {
         if (value.isEmpty) {

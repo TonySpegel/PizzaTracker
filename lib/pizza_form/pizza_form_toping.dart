@@ -21,10 +21,48 @@ class _TopingInputState extends State<TopingInput> {
   }
 
   Widget build(BuildContext context) {
-    return Chip(
-      onDeleted: deleteChip,
-      label: Text('Salami'),
-      backgroundColor: Colors.amber,
+    RaisedButton addToping = RaisedButton(
+      child: Icon(Icons.add),
+      onPressed: null,
+      shape: CircleBorder(),
+      elevation: 10,
     );
+
+    List<String> topings = [
+      'Tomaten',
+      'Salami',
+      'Mozzarella',
+      'Basilikum',
+    ];
+
+    List<Chip> topingChips = topings.map<Chip>(
+      (toping) => Chip(
+        backgroundColor: Colors.amber[200],
+        label: Text(toping),
+        onDeleted: deleteChip,
+        labelStyle: TextStyle(
+          fontSize: 16,
+          color: Colors.black
+        ),
+      )
+    )
+    .toList();
+
+    Wrap topingWrap = Wrap(
+      children: topingChips,
+      spacing: 8,
+      runSpacing: -5,
+    );
+
+    Column topingColumn = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(children: [ addToping ]),
+        Divider(),
+        topingWrap,
+      ],
+    );
+
+    return topingColumn;
   }
 }

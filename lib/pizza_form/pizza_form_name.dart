@@ -30,6 +30,9 @@ class _NameInputState extends State<NameInput> {
         labelText: 'Name',
         contentPadding: EdgeInsets.all(12),
       ),
+      style: TextStyle(
+        fontSize: 16
+      ),
       validator: (value) {
         if (value.isEmpty) {
           _setValidity(false);

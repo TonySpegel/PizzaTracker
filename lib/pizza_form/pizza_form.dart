@@ -85,7 +85,7 @@ class PizzaFormState extends State<PizzaForm> {
             ListTile(
               leading: Icon(Icons.widgets),
               contentPadding: EdgeInsets.all(0),
-              title: PizzaType()
+              title: PizzaType(),
             ),
             Divider(),
             ListTile(
