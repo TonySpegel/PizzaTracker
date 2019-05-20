@@ -21,6 +21,21 @@ class _TopingInputState extends State<TopingInput> {
   }
 
   Widget build(BuildContext context) {
+
+    TextFormField topingName = TextFormField(
+      decoration: InputDecoration(
+        labelText: 'Toping',
+        contentPadding: EdgeInsets.all(12),
+      ),
+      style: TextStyle(
+        fontSize: 16
+      ),
+      validator: (value) {
+
+      },
+      controller: widget.controller,
+    );
+
     RaisedButton addToping = RaisedButton(
       child: Icon(Icons.add),
       onPressed: null,
@@ -57,7 +72,16 @@ class _TopingInputState extends State<TopingInput> {
     Column topingColumn = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(children: [ addToping ]),
+        Row(children: [
+          Expanded(
+            flex: 8,
+            child: topingName,
+          ),
+          Expanded(
+            flex: 2,
+            child: addToping,
+          ),
+        ]),
         Divider(),
         topingWrap,
       ],
