@@ -93,6 +93,15 @@ class PizzaFormState extends State<PizzaForm> {
               leading: Icon(Icons.place),
               title: PlaceInput(controller: placeController),
             ),
+            Divider(),
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              title: RaisedButton(
+                onPressed: null,
+                child: Icon(Icons.local_pizza),
+                elevation: 10,
+              ),
+            )
             // ListTile(
             //   contentPadding: EdgeInsets.all(0),
             //   leading: Icon(Icons.place),

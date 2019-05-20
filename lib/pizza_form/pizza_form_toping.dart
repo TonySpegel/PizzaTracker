@@ -36,9 +36,13 @@ class _TopingInputState extends State<TopingInput> {
       controller: widget.controller,
     );
 
+    callMcCallface() {
+      print(widget.controller.text);
+    }
+
     RaisedButton addToping = RaisedButton(
       child: Icon(Icons.add),
-      onPressed: null,
+      onPressed: callMcCallface(),
       shape: CircleBorder(),
       elevation: 10,
     );
@@ -73,13 +77,15 @@ class _TopingInputState extends State<TopingInput> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(children: [
-          Expanded(
-            flex: 8,
+          Flexible(
+            flex: 7,
             child: topingName,
           ),
-          Expanded(
-            flex: 2,
+          Flexible(
+            flex: 3,
             child: addToping,
+            fit: FlexFit.tight,
+
           ),
         ]),
         Divider(),
