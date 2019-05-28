@@ -32,6 +32,7 @@ class PizzaFormState extends State<PizzaForm> {
   final quantityController = TextEditingController();
   final dateTimeController = TextEditingController();
   final placeController = TextEditingController();
+  final topingController = TextEditingController();
 
 
   Future newPizza() async {
@@ -71,7 +72,7 @@ class PizzaFormState extends State<PizzaForm> {
             ListTile(
               contentPadding: EdgeInsets.all(0),
               leading: Icon(Icons.local_pizza),
-              title: TopingInput(controller: nameController),
+              title: TopingInput(controller: topingController),
             ),
             Divider(),
             ListTile(

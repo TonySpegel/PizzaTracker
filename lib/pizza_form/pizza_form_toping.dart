@@ -16,8 +16,22 @@ class TopingInput extends StatefulWidget {
 }
 
 class _TopingInputState extends State<TopingInput> {
-  void deleteChip() {
-    setState(() { });
+  List<String> topings = [
+    'Salami',
+    'Pilze',
+    'Bacon'
+  ];
+
+  deleteChip(String topingName) {
+    topings.remove(topingName);
+  }
+
+  void addTopingToList() {
+    print(widget.controller.text);
+    setState(() {
+      topings.add(widget.controller.text);
+      widget.controller.clear();
+    });
   }
 
   Widget build(BuildContext context) {
@@ -27,38 +41,32 @@ class _TopingInputState extends State<TopingInput> {
         labelText: 'Toping',
         contentPadding: EdgeInsets.all(12),
       ),
-      style: TextStyle(
-        fontSize: 16
-      ),
-      validator: (value) {
-
-      },
+      style: TextStyle(fontSize: 16),
+      validator: (value) {},
       controller: widget.controller,
     );
 
-    callMcCallface() {
-      print(widget.controller.text);
-    }
-
     RaisedButton addToping = RaisedButton(
       child: Icon(Icons.add),
-      onPressed: callMcCallface(),
+      onPressed: () { addTopingToList(); },
+      // onPressed: (widget.controller.text.isNotEmpty) ? () =>  addTopingToList() : null,
       shape: CircleBorder(),
-      elevation: 10,
+      elevation: 3,
+      color: Colors.amber,
     );
 
-    List<String> topings = [
-      'Tomaten',
-      'Salami',
-      'Mozzarella',
-      'Basilikum',
-    ];
 
-    List<Chip> topingChips = topings.map<Chip>(
-      (toping) => Chip(
+
+    List<Chip> topingChips = topings.map<Chip>((toping) =>
+      Chip(
+        key: ValueKey<String>(toping),
         backgroundColor: Colors.amber[200],
         label: Text(toping),
-        onDeleted: deleteChip,
+        onDeleted: () {
+          setState(() {
+            deleteChip(toping);
+          });
+        },
         labelStyle: TextStyle(
           fontSize: 16,
           color: Colors.black
