@@ -27,6 +27,7 @@ class PizzaFormState extends State<PizzaForm> {
   //
   // Note: This is a GlobalKey<FormState>, not a GlobalKey<PizzaFormState>!
   final _formKey = GlobalKey<FormState>();
+  bool formValidity = false;
 
   final nameController = TextEditingController();
   final quantityController = TextEditingController();
@@ -37,6 +38,9 @@ class PizzaFormState extends State<PizzaForm> {
 
   Future newPizza() async {
     String pizzaName = nameController.text;
+    String place = placeController.text;
+    print(topingController.text);
+
     Firestore db = Firestore.instance;
 
     Map <String, dynamic> newMap = new Map();
@@ -45,14 +49,20 @@ class PizzaFormState extends State<PizzaForm> {
       'name': pizzaName,
       'type': ['Restaurant', 'Franchise'],
       'quantity':  1,
-      'place': 'TEST: Zu Hause',
+      'place': place,
       'date': DateTime.now(),
       'topings': ['Funghi', 'Salami', 'Mozzarella'],
     });
 
-    db
-      .collection('pizza-list')
-      .add(newMap);
+    // db
+    //   .collection('pizza-list')
+    //   .add(newMap);
+  }
+
+  void onChange() {
+    setState(() {
+      formValidity = _formKey.currentState.validate();
+    });
   }
 
   @override
@@ -61,6 +71,8 @@ class PizzaFormState extends State<PizzaForm> {
       padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
       child: Form(
         key: _formKey,
+        onChanged: onChange,
+        autovalidate: false,
         child: ListView(
           children: [
             ListTile(
@@ -68,53 +80,48 @@ class PizzaFormState extends State<PizzaForm> {
               leading: Icon(Icons.label),
               title: NameInput(controller: nameController),
             ),
+
             Divider(),
+
             ListTile(
               contentPadding: EdgeInsets.all(0),
               leading: Icon(Icons.local_pizza),
               title: TopingInput(controller: topingController),
             ),
+
             Divider(),
+
             ListTile(
               contentPadding: EdgeInsets.all(0),
               leading: Icon(Icons.event_available),
-              title: DateTimeLabel(
-                controller: dateTimeController
-              ),
+              title: DateTimeLabel(controller: dateTimeController),
             ),
+
             Divider(),
+
             ListTile(
               leading: Icon(Icons.widgets),
               contentPadding: EdgeInsets.all(0),
               title: PizzaType(),
             ),
+
             Divider(),
+
             ListTile(
               contentPadding: EdgeInsets.all(0),
               leading: Icon(Icons.place),
               title: PlaceInput(controller: placeController),
             ),
+
             Divider(),
+
             ListTile(
               contentPadding: EdgeInsets.all(0),
               title: RaisedButton(
-                onPressed: null,
+                onPressed: formValidity ? newPizza : null,
                 child: Icon(Icons.local_pizza),
-                elevation: 10,
               ),
             )
-            // ListTile(
-            //   contentPadding: EdgeInsets.all(0),
-            //   leading: Icon(Icons.place),
-            //   title:  FlatButton(
-            //     color: Colors.amber,
-            //     onPressed: () {},
-            //     child: Text(
-            //       'Location',
-            //       style: TextStyle(fontSize: 20)
-            //     ),
-            //   ),
-            // ),
           ],
         )
       )

@@ -17,6 +17,7 @@ class PizzaTracker extends StatelessWidget {
       home: new PizzaItemScreen(),
       theme: ThemeData(
         accentColor: Colors.amber,
+        buttonColor: Colors.amber,
         primaryColor: Colors.amber,
         appBarTheme: AppBarTheme(color: Colors.amber),
         cursorColor: Colors.amber,
