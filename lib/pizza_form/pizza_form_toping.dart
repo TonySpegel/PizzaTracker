@@ -75,13 +75,7 @@ class _TopingInputState extends State<TopingInput> {
     )
     .toList();
 
-    Wrap topingWrap = Wrap(
-      children: topingChips,
-      spacing: 8,
-      runSpacing: -5,
-    );
-
-    Column topingColumn = Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(children: [
@@ -89,18 +83,22 @@ class _TopingInputState extends State<TopingInput> {
             flex: 7,
             child: topingName,
           ),
+
           Flexible(
             flex: 3,
             child: addToping,
             fit: FlexFit.tight,
-
           ),
         ]),
+
         Divider(),
-        topingWrap,
+
+        Wrap(
+          children: topingChips,
+          spacing: 8,
+          runSpacing: -5,
+        ),
       ],
     );
-
-    return topingColumn;
   }
 }

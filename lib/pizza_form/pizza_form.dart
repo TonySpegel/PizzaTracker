@@ -11,6 +11,8 @@ import 'pizza_form_date.dart';
 import 'pizza_form_place.dart';
 import 'pizza_form_toping.dart';
 
+import 'toping.dart';
+
 // Create a Form Widget
 class PizzaForm extends StatefulWidget {
   @override
@@ -35,6 +37,8 @@ class PizzaFormState extends State<PizzaForm> {
   final placeController = TextEditingController();
   final topingController = TextEditingController();
 
+  // Test
+  var singletonToping = Toping();
 
   Future newPizza() async {
     String pizzaName = nameController.text;
@@ -127,29 +131,4 @@ class PizzaFormState extends State<PizzaForm> {
       )
     );
   }
-
-    //         Center(
-    //           child: RaisedButton(
-    //             color: Colors.amber,
-    //             onPressed: () {
-    //               // Validate will return true if the form is valid, or false if
-    //               // the form is invalid.
-    //               if (_formKey.currentState.validate()) {
-    //                 newPizza();
-    //               }
-    //             },
-    //             child: Row(
-    //               mainAxisAlignment: MainAxisAlignment.center,
-    //               mainAxisSize: MainAxisSize.min,
-    //               children: [
-    //                 Text('Add new'),
-    //                 Icon(Icons.local_pizza),
-    //               ],
-    //             ),
-    //           ),
-    //         )
-    //       ],
-    //     ),
-    //   ),
-    // );
 }
