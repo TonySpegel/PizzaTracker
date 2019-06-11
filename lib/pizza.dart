@@ -12,7 +12,7 @@ class Pizza {
   DocumentReference reference;
   String name;
   double quantity;
-  List topings;
+  List toppings;
   List type;
   String place;
 
@@ -20,13 +20,13 @@ class Pizza {
     : assert(map['name'] != null),
       assert(map['quantity'] != null),
       assert(map['date'] != null),
-      assert(map['topings'] != null),
+      assert(map['toppings'] != null),
       assert(map['type'] != null),
       assert(map['place'] != null),
       name = map['name'],
       quantity = map['quantity'].toDouble(),
       date = map['date'],
-      topings = map['topings'],
+      toppings = map['toppings'],
       type = map['type'],
       place = map['place'];
 
@@ -34,5 +34,5 @@ class Pizza {
     : this.fromMap(snapshot.data, reference: snapshot.reference);
 
   @override
-  String toString() => "Pizza<$name:$quantity:$date:$topings>";
+  String toString() => "Pizza<$name:$quantity:$date:$toppings>";
 }

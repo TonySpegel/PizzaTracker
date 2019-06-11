@@ -10,9 +10,9 @@ import 'pizza_form_name.dart';
 import 'pizza_form_date.dart';
 // PlaceInput
 import 'pizza_form_place.dart';
-import 'pizza_form_toping.dart';
+import 'pizza_form_topping.dart';
 
-import 'toping.dart';
+import 'topping.dart';
 
 // Create a Form Widget
 class PizzaForm extends StatefulWidget {
@@ -36,13 +36,13 @@ class PizzaFormState extends State<PizzaForm> {
   final quantityController = TextEditingController();
   final dateTimeController = TextEditingController();
   final placeController = TextEditingController();
-  final topingController = TextEditingController();
+  final toppingController = TextEditingController();
 
 
   Future newPizza() async {
     String pizzaName = nameController.text;
     String place = placeController.text;
-    print(topingController.text);
+    print(toppingController.text);
 
     Firestore db = Firestore.instance;
 
@@ -54,7 +54,7 @@ class PizzaFormState extends State<PizzaForm> {
       'quantity':  1,
       'place': place,
       'date': DateTime.now(),
-      'topings': ['Funghi', 'Salami', 'Mozzarella'],
+      'toppings': ['Funghi', 'Salami', 'Mozzarella'],
     });
 
     // db
@@ -70,8 +70,8 @@ class PizzaFormState extends State<PizzaForm> {
 
   @override
   Widget build(BuildContext context) {
-    var topingList = Provider.of<Toping>(context);
-    print(topingList.topings);
+    var toppingList = Provider.of<Topping>(context);
+    print(toppingList.toppings);
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
@@ -88,11 +88,11 @@ class PizzaFormState extends State<PizzaForm> {
               title: NameInput(controller: nameController),
             ),
             Divider(),
-            // Topings
+            // Toppings
             ListTile(
               contentPadding: EdgeInsets.all(0),
               leading: Icon(Icons.local_pizza),
-              title: TopingInput(controller: topingController),
+              title: ToppingInput(controller: toppingController),
             ),
             Divider(),
             // Date & Time

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'toping.dart';
+import 'topping.dart';
 
 //
 // TextFormField inside pizza_form
@@ -9,46 +9,46 @@ import 'toping.dart';
 // Copyright 2019 Tony Spegel
 //
 
-class TopingInput extends StatefulWidget {
-  TopingInput({Key key, this.controller}) : super(key: key);
+class ToppingInput extends StatefulWidget {
+  ToppingInput({Key key, this.controller}) : super(key: key);
 
   final TextEditingController controller;
 
   @override
-  _TopingInputState createState() => _TopingInputState();
+  _ToppingInputState createState() => _ToppingInputState();
 }
 
-class _TopingInputState extends State<TopingInput> {
-  List<String> topings = [
+class _ToppingInputState extends State<ToppingInput> {
+  List<String> toppings = [
     'Salami',
     'Pilze',
     'Bacon'
   ];
 
-  deleteChip(String topingName) {
-    final Toping topingList = Provider.of<Toping>(context);
-    topingList.removeTopingFromList(topingName);
+  deleteChip(String toppingName) {
+    final Topping toppingList = Provider.of<Topping>(context);
+    toppingList.removeToppingFromList(toppingName);
   }
 
-  void addTopingToList() {
-    String topingItem = widget.controller.text;
+  void addToppingToList() {
+    String toppingItem = widget.controller.text;
 
     setState(() {
-      topings.add(topingItem);
+      toppings.add(toppingItem);
       widget.controller.clear();
     });
 
-    var topingList = Provider.of<Toping>(context);
-    topingList.topings.add(topingItem);
+    var toppingList = Provider.of<Topping>(context);
+    toppingList.toppings.add(toppingItem);
   }
 
   Widget build(BuildContext context) {
-    final Toping topingList = Provider.of<Toping>(context);
+    final Topping toppingList = Provider.of<Topping>(context);
 
 
-    TextFormField topingName = TextFormField(
+    TextFormField toppingName = TextFormField(
       decoration: InputDecoration(
-        labelText: 'Toping',
+        labelText: 'Topping',
         contentPadding: EdgeInsets.all(12),
       ),
       style: TextStyle(fontSize: 16),
@@ -56,12 +56,12 @@ class _TopingInputState extends State<TopingInput> {
       controller: widget.controller,
     );
 
-    RaisedButton addToping = RaisedButton(
+    RaisedButton addTopping = RaisedButton(
       child: Icon(Icons.add),
       onPressed: () {
-        topingList.addTopingToList(widget.controller.text);
+        toppingList.addToppingToList(widget.controller.text);
       },
-      // onPressed: (widget.controller.text.isNotEmpty) ? () =>  addTopingToList() : null,
+      // onPressed: (widget.controller.text.isNotEmpty) ? () =>  addToppingToList() : null,
       shape: CircleBorder(),
       elevation: 3,
       color: Colors.amber,
@@ -69,15 +69,15 @@ class _TopingInputState extends State<TopingInput> {
 
 
 
-    List<Chip> topingChips = topingList.topings
-      .map<Chip>((toping) =>
+    List<Chip> toppingChips = toppingList.toppings
+      .map<Chip>((topping) =>
         Chip(
-          key: ValueKey<String>(toping),
+          key: ValueKey<String>(topping),
           backgroundColor: Colors.amber[200],
-          label: Text(toping),
+          label: Text(topping),
           onDeleted: () {
             setState(() {
-              deleteChip(toping);
+              deleteChip(topping);
             });
           },
           labelStyle: TextStyle(
@@ -94,12 +94,12 @@ class _TopingInputState extends State<TopingInput> {
         Row(children: [
           Flexible(
             flex: 7,
-            child: topingName,
+            child: toppingName,
           ),
 
           Flexible(
             flex: 3,
-            child: addToping,
+            child: addTopping,
             fit: FlexFit.tight,
           ),
         ]),
@@ -107,7 +107,7 @@ class _TopingInputState extends State<TopingInput> {
         Divider(),
 
         Wrap(
-          children: topingChips,
+          children: toppingChips,
           spacing: 8,
           runSpacing: -5,
         ),

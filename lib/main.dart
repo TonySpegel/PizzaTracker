@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // Widgets
-import 'pizza_form/toping.dart';
+import 'pizza_form/topping.dart';
 import 'pizza_item_screen.dart';
 
 import 'package:flutter/rendering.dart';
@@ -16,7 +16,7 @@ class PizzaTracker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      builder: (context) => Toping(),
+      builder: (context) => Topping(),
       child: MaterialApp(
       home: new PizzaItemScreen(),
       theme: ThemeData(
