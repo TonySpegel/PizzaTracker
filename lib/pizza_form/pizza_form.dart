@@ -70,61 +70,61 @@ class PizzaFormState extends State<PizzaForm> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      builder: (context) => Toping(),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-        child: Form(
-          key: _formKey,
-          onChanged: onChange,
-          autovalidate: false,
-          child: ListView(
-            children: [
-              // Pizza-Name
-              ListTile(
-                contentPadding: EdgeInsets.all(0),
-                leading: Icon(Icons.label),
-                title: NameInput(controller: nameController),
+    var topingList = Provider.of<Toping>(context);
+    print(topingList.topings);
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+      child: Form(
+        key: _formKey,
+        onChanged: onChange,
+        autovalidate: false,
+        child: ListView(
+          children: [
+            // Pizza-Name
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: Icon(Icons.label),
+              title: NameInput(controller: nameController),
+            ),
+            Divider(),
+            // Topings
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: Icon(Icons.local_pizza),
+              title: TopingInput(controller: topingController),
+            ),
+            Divider(),
+            // Date & Time
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: Icon(Icons.event_available),
+              title: DateTimeLabel(controller: dateTimeController),
+            ),
+            Divider(),
+            // Pizza-Type
+            ListTile(
+              leading: Icon(Icons.widgets),
+              contentPadding: EdgeInsets.all(0),
+              title: PizzaType(),
+            ),
+            Divider(),
+            // Place
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: Icon(Icons.place),
+              title: PlaceInput(controller: placeController),
+            ),
+            Divider(),
+            // Form-Button
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              title: RaisedButton(
+                onPressed: formValidity ? newPizza : null,
+                child: Icon(Icons.local_pizza),
               ),
-              Divider(),
-              // Topings
-              ListTile(
-                contentPadding: EdgeInsets.all(0),
-                leading: Icon(Icons.local_pizza),
-                title: TopingInput(controller: topingController),
-              ),
-              Divider(),
-              // Date & Time
-              ListTile(
-                contentPadding: EdgeInsets.all(0),
-                leading: Icon(Icons.event_available),
-                title: DateTimeLabel(controller: dateTimeController),
-              ),
-              Divider(),
-              // Pizza-Type
-              ListTile(
-                leading: Icon(Icons.widgets),
-                contentPadding: EdgeInsets.all(0),
-                title: PizzaType(),
-              ),
-              Divider(),
-              // Place
-              ListTile(
-                contentPadding: EdgeInsets.all(0),
-                leading: Icon(Icons.place),
-                title: PlaceInput(controller: placeController),
-              ),
-              Divider(),
-              // Form-Button
-              ListTile(
-                contentPadding: EdgeInsets.all(0),
-                title: RaisedButton(
-                  onPressed: formValidity ? newPizza : null,
-                  child: Icon(Icons.local_pizza),
-                ),
-              )
-            ],
-          )
+            )
+          ],
         )
       )
     );

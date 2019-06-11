@@ -26,7 +26,8 @@ class _TopingInputState extends State<TopingInput> {
   ];
 
   deleteChip(String topingName) {
-    topings.remove(topingName);
+    final Toping topingList = Provider.of<Toping>(context);
+    topingList.removeTopingFromList(topingName);
   }
 
   void addTopingToList() {
@@ -42,6 +43,8 @@ class _TopingInputState extends State<TopingInput> {
   }
 
   Widget build(BuildContext context) {
+    final Toping topingList = Provider.of<Toping>(context);
+
 
     TextFormField topingName = TextFormField(
       decoration: InputDecoration(
@@ -55,7 +58,9 @@ class _TopingInputState extends State<TopingInput> {
 
     RaisedButton addToping = RaisedButton(
       child: Icon(Icons.add),
-      onPressed: () { addTopingToList(); },
+      onPressed: () {
+        topingList.addTopingToList(widget.controller.text);
+      },
       // onPressed: (widget.controller.text.isNotEmpty) ? () =>  addTopingToList() : null,
       shape: CircleBorder(),
       elevation: 3,
@@ -64,23 +69,24 @@ class _TopingInputState extends State<TopingInput> {
 
 
 
-    List<Chip> topingChips = topings.map<Chip>((toping) =>
-      Chip(
-        key: ValueKey<String>(toping),
-        backgroundColor: Colors.amber[200],
-        label: Text(toping),
-        onDeleted: () {
-          setState(() {
-            deleteChip(toping);
-          });
-        },
-        labelStyle: TextStyle(
-          fontSize: 16,
-          color: Colors.black
-        ),
+    List<Chip> topingChips = topingList.topings
+      .map<Chip>((toping) =>
+        Chip(
+          key: ValueKey<String>(toping),
+          backgroundColor: Colors.amber[200],
+          label: Text(toping),
+          onDeleted: () {
+            setState(() {
+              deleteChip(toping);
+            });
+          },
+          labelStyle: TextStyle(
+            fontSize: 16,
+            color: Colors.black
+          ),
+        )
       )
-    )
-    .toList();
+      .toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
