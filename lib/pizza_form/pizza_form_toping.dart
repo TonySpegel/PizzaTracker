@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'toping.dart';
 
 //
 // TextFormField inside pizza_form
@@ -27,11 +30,15 @@ class _TopingInputState extends State<TopingInput> {
   }
 
   void addTopingToList() {
-    print(widget.controller.text);
+    String topingItem = widget.controller.text;
+
     setState(() {
-      topings.add(widget.controller.text);
+      topings.add(topingItem);
       widget.controller.clear();
     });
+
+    var topingList = Provider.of<Toping>(context);
+    topingList.topings.add(topingItem);
   }
 
   Widget build(BuildContext context) {

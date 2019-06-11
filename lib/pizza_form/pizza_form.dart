@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
 import 'pizza_type.dart';
 import 'pizza_form_name.dart';
@@ -37,8 +38,6 @@ class PizzaFormState extends State<PizzaForm> {
   final placeController = TextEditingController();
   final topingController = TextEditingController();
 
-  // Test
-  var singletonToping = Toping();
 
   Future newPizza() async {
     String pizzaName = nameController.text;
@@ -71,62 +70,61 @@ class PizzaFormState extends State<PizzaForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-      child: Form(
-        key: _formKey,
-        onChanged: onChange,
-        autovalidate: false,
-        child: ListView(
-          children: [
-            ListTile(
-              contentPadding: EdgeInsets.all(0),
-              leading: Icon(Icons.label),
-              title: NameInput(controller: nameController),
-            ),
-
-            Divider(),
-
-            ListTile(
-              contentPadding: EdgeInsets.all(0),
-              leading: Icon(Icons.local_pizza),
-              title: TopingInput(controller: topingController),
-            ),
-
-            Divider(),
-
-            ListTile(
-              contentPadding: EdgeInsets.all(0),
-              leading: Icon(Icons.event_available),
-              title: DateTimeLabel(controller: dateTimeController),
-            ),
-
-            Divider(),
-
-            ListTile(
-              leading: Icon(Icons.widgets),
-              contentPadding: EdgeInsets.all(0),
-              title: PizzaType(),
-            ),
-
-            Divider(),
-
-            ListTile(
-              contentPadding: EdgeInsets.all(0),
-              leading: Icon(Icons.place),
-              title: PlaceInput(controller: placeController),
-            ),
-
-            Divider(),
-
-            ListTile(
-              contentPadding: EdgeInsets.all(0),
-              title: RaisedButton(
-                onPressed: formValidity ? newPizza : null,
-                child: Icon(Icons.local_pizza),
+    return ChangeNotifierProvider(
+      builder: (context) => Toping(),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+        child: Form(
+          key: _formKey,
+          onChanged: onChange,
+          autovalidate: false,
+          child: ListView(
+            children: [
+              // Pizza-Name
+              ListTile(
+                contentPadding: EdgeInsets.all(0),
+                leading: Icon(Icons.label),
+                title: NameInput(controller: nameController),
               ),
-            )
-          ],
+              Divider(),
+              // Topings
+              ListTile(
+                contentPadding: EdgeInsets.all(0),
+                leading: Icon(Icons.local_pizza),
+                title: TopingInput(controller: topingController),
+              ),
+              Divider(),
+              // Date & Time
+              ListTile(
+                contentPadding: EdgeInsets.all(0),
+                leading: Icon(Icons.event_available),
+                title: DateTimeLabel(controller: dateTimeController),
+              ),
+              Divider(),
+              // Pizza-Type
+              ListTile(
+                leading: Icon(Icons.widgets),
+                contentPadding: EdgeInsets.all(0),
+                title: PizzaType(),
+              ),
+              Divider(),
+              // Place
+              ListTile(
+                contentPadding: EdgeInsets.all(0),
+                leading: Icon(Icons.place),
+                title: PlaceInput(controller: placeController),
+              ),
+              Divider(),
+              // Form-Button
+              ListTile(
+                contentPadding: EdgeInsets.all(0),
+                title: RaisedButton(
+                  onPressed: formValidity ? newPizza : null,
+                  child: Icon(Icons.local_pizza),
+                ),
+              )
+            ],
+          )
         )
       )
     );
