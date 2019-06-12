@@ -161,20 +161,65 @@ Widget buildInfoCircle(String labelText, int numberOfPizza) {
   );
 }
 
+deletePizza(String documentId) {
+  Firestore
+    .instance
+    .collection('pizza-list')
+    .document(documentId)
+    .delete()
+    .catchError((errorMessage) {
+      print(errorMessage);
+    });
+}
+
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   Pizza pizza = Pizza.fromSnapshot(data);
-  print(pizza);
 
   return Padding(
     key: ValueKey(pizza.name),
     padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
     child: Dismissible(
+      background: Container(
+        child: Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(12)),
+          color: Colors.red[400],
+          margin: EdgeInsets.all(0),
+        ),
+      ),
       child: Container(
         child: PizzaItem(pizza: pizza),
       ),
       key: Key(pizza.hashCode.toString()),
       // Swipe → to delete a Pizza
       direction: DismissDirection.startToEnd,
+      onDismissed: (direction) {
+        deletePizza(data.documentID);
+
+        Scaffold
+          .of(context)
+          .showSnackBar(
+            SnackBar(
+              content: RichText(
+                text: TextSpan(
+                  style: TextStyle(color: Colors.black),
+
+                  children: [
+                    TextSpan(
+                      text: pizza.name,
+                      style: TextStyle(fontWeight: FontWeight.bold)
+                    ),
+                    TextSpan(
+                      text: ' deleted'
+                    )
+                  ]
+                ),
+                textAlign: TextAlign.center,
+              ),
+              backgroundColor: Colors.red[400],
+            )
+          );
+      }
     ),
   );
 }
@@ -196,6 +241,7 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
     child: Card(
       shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(12)),
       color: Colors.amber[100],
+      margin: EdgeInsets.all(0),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 16),
         child: SizedBox(

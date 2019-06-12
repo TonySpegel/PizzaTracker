@@ -118,7 +118,8 @@ class PizzaItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [cardElements],
         )
-      )
+      ),
+      margin: EdgeInsets.all(0),
     );
   }
 }
