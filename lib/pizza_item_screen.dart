@@ -20,6 +20,7 @@ class PizzaItemScreen extends StatelessWidget {
         title: Text('🍕 Tracker'),
       ),
       body: _buildBody(context),
+      extendBody: true,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.amber,
         child: const Icon(Icons.local_pizza),
@@ -162,12 +163,18 @@ Widget buildInfoCircle(String labelText, int numberOfPizza) {
 
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   Pizza pizza = Pizza.fromSnapshot(data);
+  print(pizza);
 
   return Padding(
     key: ValueKey(pizza.name),
     padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-    child: Container(
-      child: PizzaItem(pizza: pizza),
+    child: Dismissible(
+      child: Container(
+        child: PizzaItem(pizza: pizza),
+      ),
+      key: Key(pizza.hashCode.toString()),
+      // Swipe → to delete a Pizza
+      direction: DismissDirection.startToEnd,
     ),
   );
 }

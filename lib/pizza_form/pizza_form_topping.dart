@@ -19,32 +19,8 @@ class ToppingInput extends StatefulWidget {
 }
 
 class _ToppingInputState extends State<ToppingInput> {
-  List<String> toppings = [
-    'Salami',
-    'Pilze',
-    'Bacon'
-  ];
-
-  deleteChip(String toppingName) {
-    final Topping toppingList = Provider.of<Topping>(context);
-    toppingList.removeToppingFromList(toppingName);
-  }
-
-  void addToppingToList() {
-    String toppingItem = widget.controller.text;
-
-    setState(() {
-      toppings.add(toppingItem);
-      widget.controller.clear();
-    });
-
-    var toppingList = Provider.of<Topping>(context);
-    toppingList.toppings.add(toppingItem);
-  }
-
   Widget build(BuildContext context) {
     final Topping toppingList = Provider.of<Topping>(context);
-
 
     TextFormField toppingName = TextFormField(
       decoration: InputDecoration(
@@ -68,7 +44,7 @@ class _ToppingInputState extends State<ToppingInput> {
     );
 
 
-
+    // List of Chips containing a Topping
     List<Chip> toppingChips = toppingList.toppings
       .map<Chip>((topping) =>
         Chip(
@@ -77,7 +53,7 @@ class _ToppingInputState extends State<ToppingInput> {
           label: Text(topping),
           onDeleted: () {
             setState(() {
-              deleteChip(topping);
+              toppingList.removeToppingFromList(topping);
             });
           },
           labelStyle: TextStyle(

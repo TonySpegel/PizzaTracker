@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class Topping with ChangeNotifier {
-  List<String> _toppings = ['Salami', 'Pilze', 'Bacon'];
+  List<String> _toppings = [];
   List<String> get toppings => _toppings;
 
   addToppingToList(String topping) {

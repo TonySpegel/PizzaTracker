@@ -39,8 +39,10 @@ class PizzaFormState extends State<PizzaForm> {
   final toppingController = TextEditingController();
 
 
-  Future newPizza() async {
-    String pizzaName = nameController.text;
+  newPizza(
+    String name,
+    List<String> toppings
+  ) async {
     String place = placeController.text;
     print(toppingController.text);
 
@@ -49,17 +51,17 @@ class PizzaFormState extends State<PizzaForm> {
     Map <String, dynamic> newMap = new Map();
 
     newMap.addAll({
-      'name': pizzaName,
+      'name': name,
       'type': ['Restaurant', 'Franchise'],
       'quantity':  1,
       'place': place,
       'date': DateTime.now(),
-      'toppings': ['Funghi', 'Salami', 'Mozzarella'],
+      'toppings': toppings,
     });
 
-    // db
-    //   .collection('pizza-list')
-    //   .add(newMap);
+    db
+      .collection('pizza-list')
+      .add(newMap);
   }
 
   void onChange() {
@@ -71,14 +73,14 @@ class PizzaFormState extends State<PizzaForm> {
   @override
   Widget build(BuildContext context) {
     var toppingList = Provider.of<Topping>(context);
-    print(toppingList.toppings);
+    List<String> toppings = toppingList.toppings;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
       child: Form(
         key: _formKey,
         onChanged: onChange,
-        autovalidate: false,
+        // autovalidate: false,
         child: ListView(
           children: [
             // Pizza-Name
@@ -120,7 +122,17 @@ class PizzaFormState extends State<PizzaForm> {
             ListTile(
               contentPadding: EdgeInsets.all(0),
               title: RaisedButton(
-                onPressed: formValidity ? newPizza : null,
+                onPressed:
+                  // formValidity ?
+                  //   newPizza(
+                  //     nameController.text,
+                  //     toppings
+                  //   ) :
+                  //   null,
+                  () => newPizza(
+                    nameController.text,
+                    toppings
+                  ),
                 child: Icon(Icons.local_pizza),
               ),
             )

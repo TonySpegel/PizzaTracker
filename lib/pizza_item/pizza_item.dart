@@ -59,7 +59,7 @@ class PizzaItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  DateFormat('yyyy.MM.dd').format(pizza.date),
+                  DateFormat('dd.MM.yyyy').format(pizza.date),
                   style: TextStyle(
                     fontWeight: FontWeight.w600
                   ),
