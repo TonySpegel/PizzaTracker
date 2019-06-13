@@ -238,22 +238,23 @@ buildCircle(mode) {
 Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
   Padding infoCard = Padding(
     padding: EdgeInsets.only(top: 8, left: 8, right: 8),
-    child: Card(
-      shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(12)),
-      color: Colors.amber[100],
-      margin: EdgeInsets.all(0),
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 16),
-        child: SizedBox(
-          height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              buildCircle('week'),
-              buildCircle('month'),
-              buildCircle('year'),
-              buildCircle('all'),
-            ],
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(12.0),
+      child: Container(
+        color: Colors.amber[100],
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 16),
+          child: SizedBox(
+            height: 60,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                buildCircle('week'),
+                buildCircle('month'),
+                buildCircle('year'),
+                buildCircle('all'),
+              ],
+            ),
           ),
         ),
       )
@@ -265,18 +266,18 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
     children: snapshot.map((data) => _buildListItem(context, data)).toList(),
   );
 
-  Column wrapper = Column(
+  Stack stacks = Stack(
     children: [
+      Container(
+        margin: const EdgeInsets.only(top: 80.0),
+
+        child: elements,
+      ),
       infoCard,
-      Expanded(
-        child: Container(
-          child: elements,
-        ),
-      )
     ],
   );
 
-  return wrapper;
+  return stacks;
 }
 
 void _settingModalBottomSheet(context) {
