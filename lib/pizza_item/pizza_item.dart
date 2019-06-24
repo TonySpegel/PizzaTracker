@@ -1,6 +1,6 @@
 //
 // Represents a Pizza with its Properties stored within my Firestore.
-// Some of these Properties are: Name, Topings, Types, Date etc.
+// Some of these Properties are: Name, Toppings, Types, Date etc.
 //
 // Copyright 2019 Tony Spegel
 //
@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 import '../pizza.dart';
 
 import 'pizza_item_type.dart';
-import 'pizza_item_toping.dart';
+import 'pizza_item_topping.dart';
 
 
 class PizzaItem extends StatelessWidget {
@@ -59,7 +59,7 @@ class PizzaItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  DateFormat('yyyy.MM.dd').format(pizza.date),
+                  DateFormat('dd.MM.yyyy').format(pizza.date),
                   style: TextStyle(
                     fontWeight: FontWeight.w600
                   ),
@@ -77,14 +77,14 @@ class PizzaItem extends StatelessWidget {
       ],
     );
 
-    Row topingsAndTypes = Row(
+    Row toppingsAndTypes = Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           flex: 7,
           child: Container(
             child: Wrap(
-              children: [ Topings(pizza.topings) ],
+              children: [ Toppings(pizza.toppings) ],
             ),
           ),
         ),
@@ -103,7 +103,7 @@ class PizzaItem extends StatelessWidget {
         child: Column(
           children: [
             nameAndTimeStamp,
-            topingsAndTypes,
+            toppingsAndTypes,
           ],
         ),
       ),
@@ -118,7 +118,8 @@ class PizzaItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [cardElements],
         )
-      )
+      ),
+      margin: EdgeInsets.all(0),
     );
   }
 }

@@ -10,6 +10,8 @@ import 'pizza.dart';
 // FireStore
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:rounded_modal/rounded_modal.dart';
+
 class PizzaItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,7 @@ class PizzaItemScreen extends StatelessWidget {
         title: Text('🍕 Tracker'),
       ),
       body: _buildBody(context),
+      extendBody: true,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.amber,
         child: const Icon(Icons.local_pizza),
@@ -50,7 +53,10 @@ Widget _buildBody(BuildContext context) {
         .snapshots(),
     builder: (context, snapshot) {
       // Show Linear Progress as long as there is no data
-      if (!snapshot.hasData) return LinearProgressIndicator();
+      if (!snapshot.hasData) return LinearProgressIndicator(
+        backgroundColor: Colors.amber,
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.amberAccent[100]),
+      );
 
       return _buildList(context, snapshot.data.documents);
     },
@@ -155,14 +161,65 @@ Widget buildInfoCircle(String labelText, int numberOfPizza) {
   );
 }
 
+deletePizza(String documentId) {
+  Firestore
+    .instance
+    .collection('pizza-list')
+    .document(documentId)
+    .delete()
+    .catchError((errorMessage) {
+      print(errorMessage);
+    });
+}
+
 Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
   Pizza pizza = Pizza.fromSnapshot(data);
 
   return Padding(
     key: ValueKey(pizza.name),
     padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-    child: Container(
-      child: PizzaItem(pizza: pizza),
+    child: Dismissible(
+      background: Container(
+        child: Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(12)),
+          color: Colors.red[400],
+          margin: EdgeInsets.all(0),
+        ),
+      ),
+      child: Container(
+        child: PizzaItem(pizza: pizza),
+      ),
+      key: Key(pizza.hashCode.toString()),
+      // Swipe → to delete a Pizza
+      direction: DismissDirection.startToEnd,
+      onDismissed: (direction) {
+        deletePizza(data.documentID);
+
+        Scaffold
+          .of(context)
+          .showSnackBar(
+            SnackBar(
+              content: RichText(
+                text: TextSpan(
+                  style: TextStyle(color: Colors.black),
+
+                  children: [
+                    TextSpan(
+                      text: pizza.name,
+                      style: TextStyle(fontWeight: FontWeight.bold)
+                    ),
+                    TextSpan(
+                      text: ' deleted'
+                    )
+                  ]
+                ),
+                textAlign: TextAlign.center,
+              ),
+              backgroundColor: Colors.red[400],
+            )
+          );
+      }
     ),
   );
 }
@@ -184,6 +241,7 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
     child: Card(
       shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(12)),
       color: Colors.amber[100],
+      margin: EdgeInsets.all(0),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 16),
         child: SizedBox(
@@ -222,14 +280,12 @@ Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
 }
 
 void _settingModalBottomSheet(context) {
-  showModalBottomSheet(
+  showRoundedModalBottomSheet(
     context: context,
-    builder: (BuildContext bc) {
-      return GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {},
-        child: PizzaForm(),
-      );
-    }
+    radius: 20.0,
+    color: Colors.white,
+    builder: (context) {
+      return PizzaForm();
+    },
   );
 }

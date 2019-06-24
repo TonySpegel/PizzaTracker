@@ -2,8 +2,17 @@
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
-import 'pizza_form_type.dart';
+import 'pizza_type.dart';
+import 'pizza_form_name.dart';
+// DateInput
+import 'pizza_form_date.dart';
+// PlaceInput
+import 'pizza_form_place.dart';
+import 'pizza_form_topping.dart';
+
+import 'topping.dart';
 
 // Create a Form Widget
 class PizzaForm extends StatefulWidget {
@@ -21,23 +30,33 @@ class PizzaFormState extends State<PizzaForm> {
   //
   // Note: This is a GlobalKey<FormState>, not a GlobalKey<PizzaFormState>!
   final _formKey = GlobalKey<FormState>();
+  bool formValidity = false;
 
-  TextEditingController nameController = TextEditingController();
+  final nameController = TextEditingController();
+  final quantityController = TextEditingController();
+  final dateTimeController = TextEditingController();
+  final placeController = TextEditingController();
+  final toppingController = TextEditingController();
 
 
-  Future newPizza() async {
-    String pizzaName = nameController.text;
+  newPizza(
+    String name,
+    List<String> toppings
+  ) async {
+    String place = placeController.text;
+    print(toppingController.text);
+
     Firestore db = Firestore.instance;
 
     Map <String, dynamic> newMap = new Map();
 
     newMap.addAll({
-      'name': pizzaName,
+      'name': name,
       'type': ['Restaurant', 'Franchise'],
       'quantity':  1,
-      'place': 'TEST: Zu Hause',
+      'place': place,
       'date': DateTime.now(),
-      'topings': ['Funghi', 'Salami', 'Mozzarella'],
+      'toppings': toppings,
     });
 
     db
@@ -45,75 +64,81 @@ class PizzaFormState extends State<PizzaForm> {
       .add(newMap);
   }
 
+  void onChange() {
+    setState(() {
+      formValidity = _formKey.currentState.validate();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    var toppingList = Provider.of<Topping>(context);
+    List<String> toppings = toppingList.toppings;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
       child: Form(
         key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        onChanged: onChange,
+        // autovalidate: false,
+        child: ListView(
           children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
-              child: Text(
-                'New 🍕',
-                style: Theme.of(context).textTheme.headline,
-              )
+            // Pizza-Name
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: Icon(Icons.label),
+              title: NameInput(controller: nameController),
             ),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: '🍕 Name',
-              ),
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Enter Pizzaname';
-                }
-              },
-              controller: nameController,
+            Divider(),
+            // Toppings
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: Icon(Icons.local_pizza),
+              title: ToppingInput(controller: toppingController),
             ),
-
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-              child: Text(
-                'Type',
-                style: Theme.of(context).textTheme.title,
-              )
+            Divider(),
+            // Date & Time
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: Icon(Icons.event_available),
+              title: DateTimeLabel(controller: dateTimeController),
             ),
-
-            PizzaType(),
-
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-              child: Text(
-                'Place',
-                style: Theme.of(context).textTheme.title,
-              )
+            Divider(),
+            // Pizza-Type
+            ListTile(
+              leading: Icon(Icons.widgets),
+              contentPadding: EdgeInsets.all(0),
+              title: PizzaType(),
             ),
-
-            Center(
-              child: RaisedButton(
-                color: Colors.amber,
-                onPressed: () {
-                  // Validate will return true if the form is valid, or false if
-                  // the form is invalid.
-                  if (_formKey.currentState.validate()) {
-                    newPizza();
-                  }
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('Add new'),
-                    Icon(Icons.local_pizza),
-                  ],
-                ),
+            Divider(),
+            // Place
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: Icon(Icons.place),
+              title: PlaceInput(controller: placeController),
+            ),
+            Divider(),
+            // Form-Button
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              title: RaisedButton(
+                onPressed:
+                  // formValidity ?
+                  //   newPizza(
+                  //     nameController.text,
+                  //     toppings
+                  //   ) :
+                  //   null,
+                  () => newPizza(
+                    nameController.text,
+                    toppings
+                  ),
+                child: Icon(Icons.local_pizza),
               ),
             )
           ],
-        ),
-      ),
+        )
+      )
     );
   }
 }
