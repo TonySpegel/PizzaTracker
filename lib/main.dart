@@ -1,11 +1,21 @@
+//
+// Main File
+//
+// Copyright 2019 Tony Spegel
+//
+
 // Material Theme
 import 'package:flutter/material.dart';
+
+// Dependency Injection System for Statemanagement.
 import 'package:provider/provider.dart';
+
 // Widgets
-import 'pizza_form/topping.dart';
+import 'pizza_form/Topping.dart';
 import 'pizza_form/PizzaType.dart';
 import 'pizza_item_screen.dart';
 
+// Needed to set debugPaintSizeEnabled
 import 'package:flutter/rendering.dart';
 
 void main() {
