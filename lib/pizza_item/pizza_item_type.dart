@@ -69,8 +69,18 @@ class Types extends StatelessWidget {
     )
     .toList();
 
-    return Wrap(
-      children: typeIconButtons,
+    return Container(
+      alignment: Alignment.center,
+      child: Wrap(
+        children: typeIconButtons,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        runAlignment: WrapAlignment.center,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(5)),
+        color: Colors.amber[100],
+      ),
+      height: 100,
     );
   }
 }
