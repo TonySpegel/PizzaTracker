@@ -1,5 +1,5 @@
 //
-// Class to respresent a Pizza an its Values
+// Class to respresent a Pizza and its Values
 //
 // Copyright 2019 Tony Spegel
 //
