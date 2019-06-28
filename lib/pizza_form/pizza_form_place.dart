@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
-
 //
-// TextFormField inside pizza_form
+// TextFormField to enter a Place where a Pizza has been eaten
+// Located in → pizza_form.dart.
 //
 // Copyright 2019 Tony Spegel
 //
+
+import 'package:flutter/material.dart';
+
 
 class PlaceInput extends StatefulWidget {
   PlaceInput({Key key, this.controller}) : super(key: key);

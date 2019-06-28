@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
-
 //
 // TextFormField inside pizza_form
 //
 // Copyright 2019 Tony Spegel
 //
+
+import 'package:flutter/material.dart';
+
 
 class NameInput extends StatefulWidget {
   NameInput({Key key, this.controller}) : super(key: key);

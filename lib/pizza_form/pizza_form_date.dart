@@ -1,12 +1,13 @@
+//
+// Shows the current Date / Time
+//
+// Copyright 2019 Tony Spegel
+//
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
 
-//
-// TextFormField inside pizza_form
-//
-// Copyright 2019 Tony Spegel
-//
 
 class DateTimeLabel extends StatefulWidget {
   DateTimeLabel({Key key, this.controller}) : super(key: key);
