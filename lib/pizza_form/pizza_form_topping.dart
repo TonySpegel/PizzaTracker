@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'topping.dart';
-
 //
 // TextFormField inside pizza_form
 //
 // Copyright 2019 Tony Spegel
 //
+
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'Topping.dart';
+
 
 class ToppingInput extends StatefulWidget {
   ToppingInput({Key key, this.controller}) : super(key: key);
