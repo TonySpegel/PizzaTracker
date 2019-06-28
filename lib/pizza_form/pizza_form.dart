@@ -1,18 +1,26 @@
+//
+// Form to send Pizza Meta-Data
+//
+// Copyright 2019 Tony Spegel
+//
+
 // Material Theme
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
-import 'pizza_type.dart';
+import 'pizza_form_type.dart';
 import 'pizza_form_name.dart';
 // DateInput
 import 'pizza_form_date.dart';
 // PlaceInput
 import 'pizza_form_place.dart';
+// PlaceInput
 import 'pizza_form_topping.dart';
 
-import 'topping.dart';
+import 'Topping.dart';
+import 'PizzaType.dart';
 
 // Create a Form Widget
 class PizzaForm extends StatefulWidget {
@@ -41,7 +49,8 @@ class PizzaFormState extends State<PizzaForm> {
 
   newPizza(
     String name,
-    List<String> toppings
+    List<String> toppings,
+    List<String> types
   ) async {
     String place = placeController.text;
     print(toppingController.text);
@@ -52,7 +61,7 @@ class PizzaFormState extends State<PizzaForm> {
 
     newMap.addAll({
       'name': name,
-      'type': ['Restaurant', 'Franchise'],
+      'type': types,
       'quantity':  1,
       'place': place,
       'date': DateTime.now(),
@@ -73,7 +82,10 @@ class PizzaFormState extends State<PizzaForm> {
   @override
   Widget build(BuildContext context) {
     var toppingList = Provider.of<Topping>(context);
+    var typeList = Provider.of<PizzaType>(context);
+
     List<String> toppings = toppingList.toppings;
+    List<String> types = typeList.types;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
@@ -108,7 +120,7 @@ class PizzaFormState extends State<PizzaForm> {
             ListTile(
               leading: Icon(Icons.widgets),
               contentPadding: EdgeInsets.all(0),
-              title: PizzaType(),
+              title: PizzaFormType(),
             ),
             Divider(),
             // Place
@@ -120,8 +132,9 @@ class PizzaFormState extends State<PizzaForm> {
             Divider(),
             // Form-Button
             ListTile(
-              contentPadding: EdgeInsets.all(0),
-              title: RaisedButton(
+              contentPadding: EdgeInsets.symmetric(vertical: 10),
+              title: FloatingActionButton(
+                elevation: 1,
                 onPressed:
                   // formValidity ?
                   //   newPizza(
@@ -131,9 +144,10 @@ class PizzaFormState extends State<PizzaForm> {
                   //   null,
                   () => newPizza(
                     nameController.text,
-                    toppings
+                    toppings,
+                    types
                   ),
-                child: Icon(Icons.local_pizza),
+                child: Icon(Icons.add),
               ),
             )
           ],
