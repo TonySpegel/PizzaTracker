@@ -6,10 +6,9 @@
 //
 
 import 'package:flutter/material.dart';
+// Date/Number formatting (amongst other things)
 import 'package:intl/intl.dart';
-
-import '../pizza.dart';
-
+import '../Pizza.dart';
 import 'pizza_item_type.dart';
 import 'pizza_item_topping.dart';
 
@@ -19,19 +18,19 @@ class PizzaItem extends StatelessWidget {
 
   PizzaItem({ this.pizza });
 
+  String format(double n) {
+    return n.toStringAsFixed(n.truncateToDouble() == n ? 0 : 1);
+  }
+
   @override
   Widget build(BuildContext context) {
-    String format(double n) {
-      return n.toStringAsFixed(n.truncateToDouble() == n ? 0 : 1);
-    }
-
-    Row nameAndTimeStamp = Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 7,
-          child: Container(
-            // color: Colors.amberAccent,
+    // Displays the first Row containing the Name of the Pizza and when it was eaten
+    Padding nameAndTimeStamp = Padding(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 7,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -41,7 +40,6 @@ class PizzaItem extends StatelessWidget {
                   child: Text(
                     pizza.name,
                     style: TextStyle(
-                      color: Colors.black,
                       fontWeight: FontWeight.w600,
                       fontSize: 18.0,
                     ),
@@ -49,64 +47,46 @@ class PizzaItem extends StatelessWidget {
                 ),
               ],
             ),
-          )
-        ),
-        Expanded(
-          flex: 3,
-          child: Container(
-            // color: Colors.amberAccent,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  DateFormat('dd.MM.yyyy').format(pizza.date),
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600
+          ),
+          Expanded(
+            flex: 3,
+            child: Container(
+              // color: Colors.amberAccent,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    DateFormat('dd.MM.yyyy').format(pizza.date),
+                    style: TextStyle(fontWeight: FontWeight.w600),
                   ),
-                ),
-                Text(
-                  DateFormat('HH:mm').format(pizza.date),
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600
+                  Text(
+                    DateFormat('HH:mm').format(pizza.date),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600
+                    ),
                   ),
-                ),
-              ],
+                ],
+              )
             )
           )
-        )
-      ],
+        ],
+      ),
+      padding: EdgeInsets.only(bottom: 10),
     );
 
+    // Second Row which displays the Toppings and the Types of the Pizza
     Row toppingsAndTypes = Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           flex: 7,
-          child: Container(
-            child: Wrap(
-              children: [ Toppings(pizza.toppings) ],
-            ),
-          ),
+          child: Toppings(pizza.toppings) ,
         ),
         Expanded(
           flex: 3,
-          child: Container(
-            child: Types(pizza.type),
-          ),
+          child: Types(pizza.type),
         ),
       ],
-    );
-
-    Expanded cardElements = Expanded(
-      child: Container(
-        // color: Colors.black12,
-        child: Column(
-          children: [
-            nameAndTimeStamp,
-            toppingsAndTypes,
-          ],
-        ),
-      ),
     );
 
     return Card(
@@ -116,7 +96,16 @@ class PizzaItem extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [cardElements],
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  nameAndTimeStamp,
+                  toppingsAndTypes,
+                ],
+              ),
+            )
+          ],
         )
       ),
       margin: EdgeInsets.all(0),
