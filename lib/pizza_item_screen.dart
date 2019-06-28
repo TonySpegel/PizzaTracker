@@ -1,3 +1,10 @@
+//
+// Main Interface
+//
+// Copyright 2019 Tony Spegel
+//
+
+
 /// s/o https://github.com/PoojaB26/LayoutsFlutter/blob/master/lib/chat_item.dart
 import 'package:flutter/material.dart';
 import 'pizza_item/pizza_item.dart';
@@ -25,7 +32,14 @@ class PizzaItemScreen extends StatelessWidget {
         backgroundColor: Colors.amber,
         child: const Icon(Icons.local_pizza),
         onPressed: () {
-          _settingModalBottomSheet(context);
+          showRoundedModalBottomSheet(
+            context: context,
+            radius: 20,
+            color: Colors.white,
+            builder: (context) {
+              return PizzaForm();
+            },
+          );
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -48,9 +62,9 @@ class PizzaItemScreen extends StatelessWidget {
 Widget _buildBody(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
     stream: Firestore.instance
-        .collection('pizza-list')
-        .orderBy('date', descending: true)
-        .snapshots(),
+      .collection('pizza-list')
+      .orderBy('date', descending: true)
+      .snapshots(),
     builder: (context, snapshot) {
       // Show Linear Progress as long as there is no data
       if (!snapshot.hasData) return LinearProgressIndicator(
@@ -63,6 +77,7 @@ Widget _buildBody(BuildContext context) {
   );
 }
 
+// Receives the Number of Snapshot-Entries using a Start- and Enddate
 Future<int> numberOfSnapshotEntries(DateTime startDate, DateTime endDate) async {
   QuerySnapshot fireStoreSnapshot = await
     Firestore
@@ -77,6 +92,8 @@ Future<int> numberOfSnapshotEntries(DateTime startDate, DateTime endDate) async 
   return documentCount.length;
 }
 
+// Receives the actual Entries by calculating the different
+// Beginnings and Endings for a Week, Month, Year..
 Future<int> getEntries(mode) async {
   DateTime today = todayUtc();
   int numberOfEntries;
@@ -126,6 +143,7 @@ Future<int> getEntries(mode) async {
   return numberOfEntries;
 }
 
+// An Info-Circle displays the Number of Pizzas eaten in a Week, Month, Year...
 Widget buildInfoCircle(String labelText, int numberOfPizza) {
   String displayName = labelText[0].toUpperCase() + labelText.substring(1);
 
@@ -135,9 +153,7 @@ Widget buildInfoCircle(String labelText, int numberOfPizza) {
       Text(displayName),
       Material(
         elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(40)),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(40))),
         child: Container(
           height: 40,
           width: 40,
@@ -161,6 +177,7 @@ Widget buildInfoCircle(String labelText, int numberOfPizza) {
   );
 }
 
+// Deletes a Document (a Pizza) given by its documentId
 deletePizza(String documentId) {
   Firestore
     .instance
@@ -179,17 +196,13 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     key: ValueKey(pizza.name),
     padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
     child: Dismissible(
-      background: Container(
-        child: Card(
-          elevation: 2,
-          shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(12)),
-          color: Colors.red[400],
-          margin: EdgeInsets.all(0),
-        ),
+      background: Card(
+        color: Colors.red[400],
+        elevation: 2,
+        margin: EdgeInsets.all(0),
+        shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(12)),
       ),
-      child: Container(
-        child: PizzaItem(pizza: pizza),
-      ),
+      child: PizzaItem(pizza: pizza),
       key: Key(pizza.hashCode.toString()),
       // Swipe → to delete a Pizza
       direction: DismissDirection.startToEnd,
@@ -198,27 +211,23 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
 
         Scaffold
           .of(context)
-          .showSnackBar(
-            SnackBar(
-              content: RichText(
-                text: TextSpan(
-                  style: TextStyle(color: Colors.black),
-
-                  children: [
-                    TextSpan(
-                      text: pizza.name,
-                      style: TextStyle(fontWeight: FontWeight.bold)
-                    ),
-                    TextSpan(
-                      text: ' deleted'
-                    )
-                  ]
-                ),
-                textAlign: TextAlign.center,
+          .showSnackBar(SnackBar(
+            backgroundColor: Colors.red[400],
+            content: RichText(
+              text: TextSpan(
+                style: TextStyle(color: Colors.black),
+                children: [
+                  TextSpan(
+                    text: pizza.name,
+                    style: TextStyle(fontWeight: FontWeight.bold)
+                  ),
+                  TextSpan(text: ' deleted')
+                ]
               ),
-              backgroundColor: Colors.red[400],
-            )
-          );
+              textAlign: TextAlign.center,
+            ),
+          )
+        );
       }
     ),
   );
@@ -235,58 +244,78 @@ buildCircle(mode) {
   );
 }
 
-Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
-  Padding infoCard = Padding(
-    padding: EdgeInsets.only(top: 8, left: 8, right: 8),
-    child: ClipRRect(
+// Sometimes it can be a good Idea to extract
+// Code into separated Widgets.
+// This ↓  might be not too useful ¯\_(ツ)_/¯
+class RoundedContainer extends StatelessWidget {
+  RoundedContainer(this.child);
+
+  final Widget child;
+
+  Widget build(BuildContext context) {
+    return ClipRRect(
       borderRadius: BorderRadius.circular(12.0),
-      child: Container(
-        color: Colors.amber[100],
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 16),
-          child: SizedBox(
-            height: 60,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                buildCircle('week'),
-                buildCircle('month'),
-                buildCircle('year'),
-                buildCircle('all'),
-              ],
-            ),
+      child: this.child,
+    );
+  }
+}
+
+Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+  // This Panel (a 'Card') is at the top of the App
+  // and floats above a ListView showing recorded Pizzas.
+  // It displays the Number of eaten Pizzas for the
+  // past Week, Month, Year and all Time.
+  Padding infoCard = Padding(
+    padding: EdgeInsets.only(top: 8, left: 4, right: 4),
+    child: Card(
+      color: Colors.amber[100],
+      elevation: 7,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 16),
+        child: SizedBox(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              buildCircle('week'),
+              buildCircle('month'),
+              buildCircle('year'),
+              buildCircle('all'),
+            ],
           ),
-        ),
-      )
+          height: 60,
+        )
+      ),
     )
   );
 
-  ListView elements = ListView(
-    padding: const EdgeInsets.only(top: 20.0),
-    children: snapshot.map((data) => _buildListItem(context, data)).toList(),
+  // Used as a hidden first Item to provide some kind of Margin
+  // to show the Rest of the Listview's Items below the "infoPanel"
+  const topContainer = SizedBox(
+    height: 105,
   );
 
-  Stack stacks = Stack(
-    children: [
-      Container(
-        margin: const EdgeInsets.only(top: 80.0),
+  // Same as topContainer but used for bottomNavigationBar
+  // to provide a Margin.
+  const bottomContainer = SizedBox(
+    height: 50,
+  );
 
-        child: elements,
+  // In order to have the 'infoCard' floating above the ListView
+  // it is necessary to use the Stack-Widget. It is similiar to
+  // the CSS-Porperty 'z-index'. The order of the 'children'-Property
+  // indicates which element at the lowest level
+  // appears first - in this Case ListView and then infoCard above that.
+  return Stack(
+    children: [
+      ListView(
+        children: [
+          topContainer,
+          ...snapshot.map((data) => _buildListItem(context, data)).toList(),
+          bottomContainer
+        ],
       ),
       infoCard,
     ],
-  );
-
-  return stacks;
-}
-
-void _settingModalBottomSheet(context) {
-  showRoundedModalBottomSheet(
-    context: context,
-    radius: 20.0,
-    color: Colors.white,
-    builder: (context) {
-      return PizzaForm();
-    },
   );
 }
