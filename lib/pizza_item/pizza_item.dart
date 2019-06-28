@@ -50,23 +50,20 @@ class PizzaItem extends StatelessWidget {
           ),
           Expanded(
             flex: 3,
-            child: Container(
-              // color: Colors.amberAccent,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    DateFormat('dd.MM.yyyy').format(pizza.date),
-                    style: TextStyle(fontWeight: FontWeight.w600),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  DateFormat('dd.MM.yyyy').format(pizza.date),
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  DateFormat('HH:mm').format(pizza.date),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600
                   ),
-                  Text(
-                    DateFormat('HH:mm').format(pizza.date),
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600
-                    ),
-                  ),
-                ],
-              )
+                ),
+              ],
             )
           )
         ],
