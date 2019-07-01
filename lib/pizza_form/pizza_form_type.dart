@@ -18,6 +18,7 @@ class _PizzaFormTypeState extends State<PizzaFormType> {
   bool franchiseVal = false;
   bool restaurantVal = false;
   bool tkpVal = false;
+  bool selfMadeVal = false;
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +125,24 @@ class _PizzaFormTypeState extends State<PizzaFormType> {
                 value == true ?
                   typeValues.addTypeToList('delivery'):
                   typeValues.removeTypeFromList('delivery');
+              },
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Selfmade'),
+            Checkbox(
+              value: selfMadeVal,
+              onChanged: (bool value) {
+                setState(() {
+                  selfMadeVal = value;
+                });
+
+                value == true ?
+                  typeValues.addTypeToList('wfngtn'):
+                  typeValues.removeTypeFromList('wfngtn');
               },
             ),
           ],

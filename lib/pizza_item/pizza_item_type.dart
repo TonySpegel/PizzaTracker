@@ -63,6 +63,14 @@ class Types extends StatelessWidget {
             );
             break;
 
+          case 'wfngtn':
+            return IconButton(
+              icon: Icon(Icons.local_florist),
+              tooltip: 'Garden',
+              onPressed: () {},
+            );
+            break;
+
           default:
         }
       }
