@@ -30,6 +30,10 @@ class _NameInputState extends State<NameInput> {
       decoration: InputDecoration(
         labelText: 'Name',
         contentPadding: EdgeInsets.all(12),
+        suffixIcon: IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () { widget.controller.clear(); }
+        )
       ),
       style: TextStyle(
         fontSize: 16

@@ -28,9 +28,14 @@ class _PlaceInputState extends State<PlaceInput> {
 
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
       decoration: InputDecoration(
         labelText: 'Place',
         contentPadding: EdgeInsets.all(12),
+        suffixIcon: IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () { widget.controller.clear(); }
+        )
       ),
       style: TextStyle(
         fontSize: 16
@@ -41,7 +46,6 @@ class _PlaceInputState extends State<PlaceInput> {
           return 'Enter Place';
         }
       },
-      controller: widget.controller,
     );
   }
 }

@@ -16,9 +16,16 @@ class ToppingInput extends StatefulWidget {
 
   @override
   _ToppingInputState createState() => _ToppingInputState();
+
 }
 
 class _ToppingInputState extends State<ToppingInput> {
+  // Handles adding Toppings and clearing the corresponding Input
+  void addTopping(Topping toppingList, String topping) {
+    toppingList.addToppingToList(topping);
+    widget.controller.clear();
+  }
+
   Widget build(BuildContext context) {
     final Topping toppingList = Provider.of<Topping>(context);
 
@@ -26,6 +33,10 @@ class _ToppingInputState extends State<ToppingInput> {
       decoration: InputDecoration(
         labelText: 'Topping',
         contentPadding: EdgeInsets.all(12),
+        suffixIcon: IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () { widget.controller.clear(); }
+        )
       ),
       style: TextStyle(fontSize: 16),
       validator: (value) {},
@@ -34,10 +45,7 @@ class _ToppingInputState extends State<ToppingInput> {
 
     RaisedButton addTopping = RaisedButton(
       child: Icon(Icons.add),
-      onPressed: () {
-        toppingList.addToppingToList(widget.controller.text);
-      },
-      // onPressed: (widget.controller.text.isNotEmpty) ? () =>  addToppingToList() : null,
+      onPressed: (widget.controller.text.isNotEmpty) ? () =>  this.addTopping(toppingList, widget.controller.text) : null,
       shape: CircleBorder(),
       elevation: 3,
       color: Colors.amber,
