@@ -1,0 +1,5 @@
+// Declarative style
+return ViewB(
+  color: red,
+  child: ViewC(),
+)

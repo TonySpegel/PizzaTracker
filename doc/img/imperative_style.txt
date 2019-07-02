@@ -1,0 +1,7 @@
+// Imperative style
+b.setColor(red)
+b.clearChildren()
+
+ViewC c3 = new ViewC()
+
+b.add(c3)
