@@ -39,9 +39,7 @@ class _PizzaFormTypeState extends State<PizzaFormType> {
             Checkbox(
               value: tkpVal,
               onChanged: (bool value) {
-                setState(() {
-                  tkpVal = value;
-                });
+                setState(() { tkpVal = value; });
 
                 value == true ?
                   typeValues.addTypeToList('tkp'):
@@ -60,9 +58,7 @@ class _PizzaFormTypeState extends State<PizzaFormType> {
             Checkbox(
               value: franchiseVal,
               onChanged: (bool value) {
-                setState(() {
-                  franchiseVal = value;
-                });
+                setState(() { franchiseVal = value; });
 
                 value == true ?
                   typeValues.addTypeToList('franchise'):
@@ -80,9 +76,7 @@ class _PizzaFormTypeState extends State<PizzaFormType> {
             Checkbox(
               value: restaurantVal,
               onChanged: (bool value) {
-                setState(() {
-                  restaurantVal = value;
-                });
+                setState(() { restaurantVal = value; });
 
                 value == true ?
                   typeValues.addTypeToList('restaurant'):
@@ -99,9 +93,7 @@ class _PizzaFormTypeState extends State<PizzaFormType> {
             Checkbox(
               value: familyVal,
               onChanged: (bool value) {
-                setState(() {
-                  familyVal = value;
-                });
+                setState(() { familyVal = value; });
 
                 value == true ?
                   typeValues.addTypeToList('familienpizza'):
@@ -118,9 +110,7 @@ class _PizzaFormTypeState extends State<PizzaFormType> {
             Checkbox(
               value: deliveryVal,
               onChanged: (bool value) {
-                setState(() {
-                  deliveryVal = value;
-                });
+                setState(() { deliveryVal = value; });
 
                 value == true ?
                   typeValues.addTypeToList('delivery'):
@@ -129,6 +119,7 @@ class _PizzaFormTypeState extends State<PizzaFormType> {
             ),
           ],
         ),
+        // Selfmade: WFNGTN
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -136,9 +127,7 @@ class _PizzaFormTypeState extends State<PizzaFormType> {
             Checkbox(
               value: selfMadeVal,
               onChanged: (bool value) {
-                setState(() {
-                  selfMadeVal = value;
-                });
+                setState(() { selfMadeVal = value; });
 
                 value == true ?
                   typeValues.addTypeToList('wfngtn'):
