@@ -18,14 +18,6 @@ class PlaceInput extends StatefulWidget {
 }
 
 class _PlaceInputState extends State<PlaceInput> {
-  bool _isValid = true;
-
-  void _setValidity(bool state) {
-    setState(() {
-      _isValid = state;
-    });
-  }
-
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
@@ -42,7 +34,6 @@ class _PlaceInputState extends State<PlaceInput> {
       ),
       validator: (value) {
         if (value.isEmpty) {
-          _setValidity(false);
           return 'Enter Place';
         }
       },
