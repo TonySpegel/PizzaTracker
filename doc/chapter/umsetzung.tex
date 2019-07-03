@@ -75,12 +75,21 @@ Im imperativen Stil würde man eine Instanz \textit{b} des so
 genannten \textit{Owners} der View \textit{ViewB} nutzen
 und mit Hilfe eine Selektors wie beispielsweise \textit{findViewById}
 Änderungen auf dieser anwenden (und somit diese implizit invalidieren).
+Das kann ungefähr so aussehen:
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.4\columnwidth]{imperative_style}
     \caption{Beispiel: imperativer Stil}
 \end{figure}
+
+Außerdem müsste dieses Setup im Konstruktor von \textit{ViewB} dupliziert
+werden, da die UI (der \ac{SPOT}) möglicherweise die Instanz \textit{b} überlebt.
+Im deklarativen Frameworks sind View-Konfigurationen
+(wie \textit{Flutter's} Widgets) unveränderlich (immutable) und an sich
+nur simple Blaupausen. Um ein UI zu ändern, löst ein Widget einen Rebuild
+auf sich selbst aus (in \textit{StatefulWidgets} häufig per \textit{setState()}
+und erzeugt damit einen neuen Widget-Subtree.
 
 \begin{figure}[H]
     \centering
