@@ -17,14 +17,6 @@ class NameInput extends StatefulWidget {
 }
 
 class _NameInputState extends State<NameInput> {
-  bool _isValid = true;
-
-  void _setValidity(bool state) {
-    setState(() {
-      _isValid = state;
-    });
-  }
-
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
@@ -40,7 +32,6 @@ class _NameInputState extends State<NameInput> {
       ),
       validator: (value) {
         if (value.isEmpty) {
-          _setValidity(false);
           return 'Enter Pizzaname';
         }
       },
