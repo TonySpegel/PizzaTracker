@@ -1,0 +1,15 @@
+DateTime lastDayOfMonth(DateTime today){
+  return (today.month < 12) ?
+    DateTime(
+      today.year,
+      today.month + 1,
+      0,
+      23, 59, 59
+    ) :
+    DateTime(
+      today.year + 1,
+      1,
+      0,
+      23, 59, 59
+    );
+}

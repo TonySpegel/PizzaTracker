@@ -5,10 +5,21 @@ DateTime todayUtc(){
 
 DateTime startOfDay(DateTime date){
   if (date == null) return null;
+
   if (date.isUtc) {
-    return new DateTime.utc(date.year, date.month, date.day, 0, 0, 0);
+    return new DateTime.utc(
+      date.year,
+      date.month,
+      date.day,
+      0, 0, 0
+    );
   } else {
-    return new DateTime(date.year, date.month, date.day, 0, 0, 0);
+    return new DateTime(
+      date.year,
+      date.month,
+      date.day,
+      0, 0, 0
+    );
   }
 }
 
@@ -27,8 +38,18 @@ DateTime firstDayOfMonth(DateTime today) {
 
 DateTime lastDayOfMonth(DateTime today) {
   return (today.month < 12) ?
-    DateTime(today.year, today.month + 1, 0, 23, 59, 59) :
-    DateTime(today.year + 1, 1, 0, 23, 59, 59);
+    DateTime(
+      today.year,
+      today.month + 1,
+      0,
+      23, 59, 59
+    ) :
+    DateTime(
+      today.year + 1,
+      1,
+      0,
+      23, 59, 59
+    );
 }
 
 

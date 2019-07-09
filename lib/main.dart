@@ -32,6 +32,7 @@ class PizzaTracker extends StatelessWidget {
         ChangeNotifierProvider(builder: (context) => PizzaType()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: PizzaItemScreen(),
         theme: ThemeData(
           accentColor: Colors.amber,
