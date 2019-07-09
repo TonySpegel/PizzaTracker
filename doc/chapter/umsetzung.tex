@@ -151,7 +151,7 @@ Bildschirms erweitert werden.
     \minipage[t]{0.4\textwidth}\vspace{0pt}
         \includegraphics[width=\linewidth]{pixel-3_mockup-2--form}
         \caption{
-            App: Hauptansicht
+            App: Formular
         }
     \endminipage\hfill
     \minipage[t]{0.6\textwidth}\vspace{0pt}
@@ -185,11 +185,23 @@ Bildschirms erweitert werden.
         Art der Pizza vor allem das \textit{Grid}- sowie
         das \textit{Checkbox}- (in Kombination) mit dem \textit{Text}-Widget
         zum Einsatz.
-
     \endminipage\hfill
 \end{figure}
+Um im Formular abgerundetete Ecken darstellen zu können, benötigt man
+das extern erhältliche Widget \textit{showRoundedModalBottomSheet}.
+Allerdings kann auch dieses nicht über eine Höhe von 50\% des Bildschirms
+hinaus gehen und zwingt einen somit zum scrollen.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\columnwidth]{pixel-3_mockup-3--dismissible}
+    \caption{App: Dismissible}
+\end{figure}
 
+Um Pizzen schnell wieder löschen (und später potentiell bearbeiten)
+zu können, bietet sich das \textit{Dismissible}-Widget an.
+Dieses kann man beliebig um andere Widgets packen und diesem
+durch wischen in bestimmte Richtungen verschiedene Aktionen zuweisen.
 
 \subsubsection{Date-Library}
 
