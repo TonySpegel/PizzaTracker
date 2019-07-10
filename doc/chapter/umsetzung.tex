@@ -1,7 +1,7 @@
 \section{Umsetzung}
 Im Folgenden wird die Umsetzung insbesondere im
-Bezug auf die Wahl der Technolgie sowie Darstellung
-der App betrachtet.
+Bezug auf die Wahl der Technologie des Layouts
+sowie Darstellung der App betrachtet.
 
 \subsection{Technologie}
 Um Apps zu entwickeln gibt es viele Möglichkeiten.
@@ -18,9 +18,9 @@ Diese lassen sich grob in folgende Arten einteilen
     \caption{Übersicht Arten von Apps}
 \end{table}
 
-Ich bin großer Fan von \ac{WORA} und entwickle überlicherweise vor allem Web-Apps.
+Ich bin großer Fan von \ac{WORA} und entwickle üblicherweise vor allem Web-Apps.
 Um etwas neues zu lernen und daran zu wachsen, entschied ich mich,
-dieses Mal dazu eine Cross-Plattform-Technolgie zu nutzen.
+dieses Mal dazu eine Cross-Plattform-Technologie zu nutzen.
 Die Entscheidung fiel dabei auf das von Google entwickelte Open Source \ac{UI}-Kit \textit{Flutter}.
 
 \begin{figure}[H]
@@ -45,9 +45,25 @@ Eines der Entwicklungsziele von \textit{Flutter} war es nämlich,
 besonders performante Apps entwickeln zu können welche mit einer hohen
 Hertz-Zahl (60-120 \textit{Hz}) laufen. Mit diesem Ansatz ist es möglich,
 die gesamte UI über den Grafikchip des Systems zu berechnen und die CPU zu entlassen.
+Dadurch wird es außerdem möglich, Änderungen die man im Code vornimmt,
+nahezu ohne Verzögerung in der App zu sehen, ohne das ein Neuladen oder ähnliches
+notwendig ist.
 
 \subsubsection{Dart}
-\textit{Flutter}-Apps werden in \textit{Dart} entwickelt.
+\textit{Flutter}-Apps werden in der Programmiersprache \textit{Dart}
+entwickelt. \textit{Dart} ist eine objektorientierte,
+klassenbasierte Sprache mit Garbage-Collector und wird vor allem durch
+\textit{Google} entwickelt. Sie wurde vor allem durch
+\textit{C\#, Erlang, JavaScript, Smalltalk} sowie \textit{Strongtalk}
+beeinflusst. Im \textit{Dart}-\ac{SDK} enthaltenen sind:
+die \textit{Dart}-\ac{VM}, dem Compiler \textit{dart2js}
+welcher es erlaubt \textit{Dart} in \textit{JavaScript}
+zu kompilieren sowie der Paketmanager \textit{Pub}.
+\textit{Dart}-Code kann mittels \ac{AOT} kompiliert werden.
+Dies hat zum Vorteil das Programmcode vor der Ausführung in native
+Maschinensprache übersetzt wird und somit wesentlich schneller ausgeführt
+werden kann. Apps geschrieben mit \textit{Flutter} werden automatisch
+per \textit{AOT} kompiliert.
 
 \subsubsection{Deklaratives UI}
 Im Gegensatz zu imperativen Frameworks wie dem \textit{Android SDK}
@@ -104,7 +120,7 @@ und erzeugt damit einen neuen Widget-Subtree.
 Die folgenden Abschnitte zeigen Auszüge, die sich bei der Entwicklung
 als besonders anspruchsvoll herausgestellt haben.
 
-\subsubsection{Layout}
+\subsubsection{Layout \& Design}
 
 Die App besteht grundsätzlich aus drei Bereichen:
 einer Liste, einem Informations-Panel und einem Formular.
@@ -187,7 +203,7 @@ Bildschirms erweitert werden.
         zum Einsatz.
     \endminipage\hfill
 \end{figure}
-Um im Formular abgerundetete Ecken darstellen zu können, benötigt man
+Um im Formular abgerundete Ecken darstellen zu können, benötigt man
 das extern erhältliche Widget \textit{showRoundedModalBottomSheet}.
 Allerdings kann auch dieses nicht über eine Höhe von 50\% des Bildschirms
 hinaus gehen und zwingt einen somit zum scrollen.
@@ -202,6 +218,9 @@ Um Pizzen schnell wieder löschen (und später potentiell bearbeiten)
 zu können, bietet sich das \textit{Dismissible}-Widget an.
 Dieses kann man beliebig um andere Widgets packen und diesem
 durch wischen in bestimmte Richtungen verschiedene Aktionen zuweisen.
+
+\subsubsection{State-Management}
+
 
 \subsubsection{Date-Library}
 
