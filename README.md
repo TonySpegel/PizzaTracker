@@ -1,7 +1,7 @@
 # Pizza Tracker
 🍕🍕🍕🍕🍕🍕🍕🍕  
 
-This App collects Data about my Pizza Eating Habits. It's mostly inspired
+This (Android)-App collects Data about my Pizza Eating Habits. It's mostly inspired
 by some Threads at [r/dataisbeautiful/](https://www.reddit.com/r/dataisbeautiful/) 
 and their more often than not odd Datasets. It is written in Dart with the [Flutter](https://flutter.dev/docs)-Framework.  
 It belongs to a university project at the University of Applied Sciences Jena which I developed for an elective module called "Mobile App Development II".
