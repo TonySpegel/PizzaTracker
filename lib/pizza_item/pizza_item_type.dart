@@ -1,3 +1,10 @@
+//
+// Displays Types of a Pizza as IconButtons inside
+// 'pizza_item.dart'
+//
+// Copyright 2019 Tony Spegel
+//
+
 import 'package:flutter/material.dart';
 
 class Types extends StatelessWidget {

@@ -1,3 +1,9 @@
+//
+// Convenience-Methods for handling Date-Values
+//
+// Copyright 2019 Tony Spegel
+//
+
 DateTime todayUtc(){
   DateTime now = new DateTime.now();
   return startOfDay(new DateTime.utc(now.year, now.month, now.day));

@@ -1,3 +1,10 @@
+//
+// Displays Toppings of a Pizza as Chips inside
+// 'pizza_item.dart'
+//
+// Copyright 2019 Tony Spegel
+//
+
 import 'package:flutter/material.dart';
 
 class Toppings extends StatelessWidget {
