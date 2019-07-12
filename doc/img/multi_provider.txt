@@ -1,0 +1,19 @@
+class PizzaTracker extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          builder: (context) => Topping()
+        ),
+        ChangeNotifierProvider(
+          builder: (context) => PizzaType()
+        ),
+      ],
+      child: MaterialApp(
+        home: PizzaItemScreen(),
+        theme: ThemeData(...),
+      ),
+    );
+  }
+}
