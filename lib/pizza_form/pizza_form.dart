@@ -71,6 +71,8 @@ class PizzaFormState extends State<PizzaForm> {
     db
       .collection('pizza-list')
       .add(newMap);
+
+    Navigator.pop(context);
   }
 
   void onChange() {
